@@ -13,7 +13,7 @@
  *	David Dawes, Andrew E. Mileski, Leonard N. Zubkoff,
  *	Guy DESBIEF, Itai Nahshon.
  */
-/* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/cirrus/lg_driver.c,v 1.49 2003/11/03 05:11:09 tsi Exp $ */
+/* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/cirrus/lg_driver.c,v 1.45 2003/08/23 15:02:57 dawes Exp $ */
 
 #define EXPERIMENTAL
 
@@ -84,8 +84,7 @@ void LgAdjustFrame(int scrnIndex, int x, int y, int flags);
 
 /* Optional functions */
 void LgFreeScreen(int scrnIndex, int flags);
-ModeStatus LgValidMode(int scrnIndex, DisplayModePtr mode,
-		       Bool verbose, int flags);
+int	LgValidMode(int scrnIndex, DisplayModePtr mode, Bool verbose, int flags);
 
 /* Internally used functions */
 static void LgRestoreLgRegs(ScrnInfoPtr pScrn, LgRegPtr lgReg);
@@ -246,7 +245,7 @@ static XF86ModuleVersionInfo lgVersRec =
 	MODULEVENDORSTRING,
 	MODINFOSTRING1,
 	MODINFOSTRING2,
-	XORG_VERSION_CURRENT,
+	XF86_VERSION_CURRENT,
 	LG_MAJOR_VERSION, LG_MINOR_VERSION, LG_PATCHLEVEL,
 	ABI_CLASS_VIDEODRV,			/* This is a video driver */
 	ABI_VIDEODRV_VERSION,
@@ -371,6 +370,10 @@ LgDoDDC(ScrnInfoPtr pScrn)
 	if (!CirMapMem(pCir, pScrn->scrnIndex))
 		return FALSE;
 
+	{
+	    ErrorF("RIF Control %#04x,  RAC Control %#04x\n",
+		   memrw(0x200), memrw(0x201));
+	}
 #if LGuseI2C
 	if (!LgI2CInit(pScrn)) {
 		xf86DrvMsg(pScrn->scrnIndex, X_ERROR, "I2C initialization failed\n");
@@ -380,8 +383,7 @@ LgDoDDC(ScrnInfoPtr pScrn)
 
 	/* Read and output monitor info using DDC2 over I2C bus */
 	MonInfo = xf86DoEDID_DDC2(pScrn->scrnIndex, pCir->I2CPtr1);
-	xf86DrvMsg(pScrn->scrnIndex, X_INFO, "I2C Monitor info: %p\n",
-		   (void *)MonInfo);
+	xf86DrvMsg(pScrn->scrnIndex, X_INFO, "I2C Monitor info: %p\n", MonInfo);
 	xf86PrintEDID(MonInfo);
 	xf86DrvMsg(pScrn->scrnIndex, X_INFO, "end of I2C Monitor info\n\n");
 #endif /* LGuseI2C */
@@ -947,6 +949,7 @@ static Bool
 LgModeInit(ScrnInfoPtr pScrn, DisplayModePtr mode)
 {
 	vgaHWPtr hwp;
+	vgaRegPtr vgaReg;
 	CirPtr pCir;
 	int width;
 	Bool VDiv2 = FALSE;
@@ -997,6 +1000,8 @@ LgModeInit(ScrnInfoPtr pScrn, DisplayModePtr mode)
 #ifdef LG_DEBUG
 	ErrorF("SynthClock = %d\n", mode->SynthClock);
 #endif
+	vgaReg = &hwp->ModeReg;
+
 	hwp->IOBase = 0x3D0;
 	hwp->ModeReg.MiscOutReg |= 0x01;
 #if 0 /* Mono address */
@@ -1277,7 +1282,7 @@ LgRestore(ScrnInfoPtr pScrn)
 	LgRegPtr lgReg;
 
 #ifdef LG_DEBUG
-	ErrorF("LgRestore  pScrn = %p\n", (void *)pScrn);
+	ErrorF("LgRestore  pScrn = 0x%08X\n", pScrn);
 #endif
 
 	pCir = CIRPTR(pScrn);
@@ -1342,9 +1347,6 @@ LgScreenInit(int scrnIndex, ScreenPtr pScreen, int argc, char **argv)
 	/* Initialise the first mode */
 	if (!LgModeInit(pScrn, pScrn->currentMode))
 		return FALSE;
-
-	/* Make things beautiful */
-	LgSaveScreen(pScreen, SCREEN_SAVER_ON);
 
 	/* Set the viewport */
 	LgAdjustFrame(scrnIndex, pScrn->frameX0, pScrn->frameY0, 0);
@@ -1723,7 +1725,7 @@ LgFreeScreen(int scrnIndex, int flags)
 /* Checks if a mode is suitable for the selected chipset. */
 
 /* Optional */
-ModeStatus
+int
 LgValidMode(int scrnIndex, DisplayModePtr mode, Bool verbose, int flags)
 {
 	int lace;

@@ -11,7 +11,7 @@
  *    Guy DESBIEF
  */
 
-/* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/cirrus/alp_driver.c,v 1.35 2003/11/03 05:11:09 tsi Exp $ */
+/* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/cirrus/alp_driver.c,v 1.32 2003/08/23 16:09:16 dawes Exp $ */
 
 /* All drivers should typically include these */
 #include "xf86.h"
@@ -93,8 +93,7 @@ void AlpAdjustFrame(int scrnIndex, int x, int y, int flags);
 
 /* Optional functions */
 void AlpFreeScreen(int scrnIndex, int flags);
-ModeStatus AlpValidMode(int scrnIndex, DisplayModePtr mode,
-			Bool verbose, int flags);
+int	AlpValidMode(int scrnIndex, DisplayModePtr mode, Bool verbose, int flags);
 /* Internally used functions */
 static void	AlpSave(ScrnInfoPtr pScrn);
 static void	AlpRestore(ScrnInfoPtr pScrn);
@@ -238,7 +237,7 @@ static XF86ModuleVersionInfo alpVersRec =
 	MODULEVENDORSTRING,
 	MODINFOSTRING1,
 	MODINFOSTRING2,
-	XORG_VERSION_CURRENT,
+	XF86_VERSION_CURRENT,
 	ALP_MAJOR_VERSION, ALP_MINOR_VERSION, ALP_PATCHLEVEL,
 	ABI_CLASS_VIDEODRV,			/* This is a video driver */
 	ABI_VIDEODRV_VERSION,
@@ -362,7 +361,7 @@ AlpCountRam(ScrnInfoPtr pScrn)
 	pCir->chip.alp->sr0f = hwp->readSeq(hwp, 0x0F);
     }
     xf86DrvMsg(pScrn->scrnIndex, from, "Memory Config reg 1 is 0x%02X\n",
-	       (unsigned int)pCir->chip.alp->sr0f);
+	       pCir->chip.alp->sr0f);
     
     switch (pCir->Chipset) {
     case PCI_CHIP_GD5430:
@@ -405,7 +404,7 @@ AlpCountRam(ScrnInfoPtr pScrn)
 	    pCir->chip.alp->sr17 = hwp->readSeq(hwp, 0x17);
 	}
 	xf86DrvMsg(pScrn->scrnIndex, from, "Memory Config reg 2 is 0x%02X\n",
-		   (unsigned int)pCir->chip.alp->sr17);
+		   pCir->chip.alp->sr17);
 	
 	if ((pCir->chip.alp->sr0f & 0x18) == 0x18) {
 	    if (pCir->chip.alp->sr0f & 0x80) {
@@ -431,7 +430,7 @@ AlpCountRam(ScrnInfoPtr pScrn)
 	    pCir->chip.alp->sr17 = hwp->readSeq(hwp, 0x17);
 	}
 	xf86DrvMsg(pScrn->scrnIndex, from, "Memory Config reg 2 is 0x%02X\n",
-		   (unsigned int)pCir->chip.alp->sr17);
+		   pCir->chip.alp->sr17);
 	videoram = 1024;
 	if ((pCir->chip.alp->sr0f & 0x18) == 0x18) {	/* 2 or 4 MB */
 	    videoram = 2048;
@@ -1221,6 +1220,7 @@ static Bool
 AlpModeInit(ScrnInfoPtr pScrn, DisplayModePtr mode)
 {
 	vgaHWPtr hwp;
+	vgaRegPtr vgaReg;
 	CirPtr pCir;
 	int depthcode;
 	int width;
@@ -1314,6 +1314,8 @@ AlpModeInit(ScrnInfoPtr pScrn, DisplayModePtr mode)
 	/* Disable DCLK pin driver, interrupts. */
 	pCir->chip.alp->ModeReg.ExtVga[GR17] |= 0x08;
 	pCir->chip.alp->ModeReg.ExtVga[GR17] &= ~0x04;
+
+	vgaReg = &hwp->ModeReg;
 
 	pCir->chip.alp->ModeReg.ExtVga[HDR] = 0;
 	/* Enable linear mode and high-res packed pixel mode */
@@ -1466,6 +1468,7 @@ AlpScreenInit(int scrnIndex, ScreenPtr pScreen, int argc, char **argv)
 	ScrnInfoPtr pScrn;
 	vgaHWPtr hwp;
 	CirPtr pCir;
+	AlpPtr pAlp;
 	int i, ret;
 	int init_picture = 0;
 	VisualPtr visual;
@@ -1484,6 +1487,7 @@ AlpScreenInit(int scrnIndex, ScreenPtr pScreen, int argc, char **argv)
 
 	hwp = VGAHWPTR(pScrn);
 	pCir = CIRPTR(pScrn);
+	pAlp = ALPPTR(pCir);
 	
 	/* Map the VGA memory when the primary video */
 	if (!vgaHWMapMem(pScrn))
@@ -1512,9 +1516,6 @@ AlpScreenInit(int scrnIndex, ScreenPtr pScreen, int argc, char **argv)
 	/* Initialise the first mode */
 	if (!AlpModeInit(pScrn, pScrn->currentMode))
 		return FALSE;
-
-	/* Make things beautiful */
-	AlpSaveScreen(pScreen, SCREEN_SAVER_ON);
 
 	/* Set the viewport */
 	AlpAdjustFrame(scrnIndex, pScrn->frameX0, pScrn->frameY0, 0);
@@ -1907,7 +1908,7 @@ AlpFreeScreen(int scrnIndex, int flags)
 /* Checks if a mode is suitable for the selected chipset. */
 
 /* Optional */
-ModeStatus
+int
 AlpValidMode(int scrnIndex, DisplayModePtr mode, Bool verbose, int flags)
 {
 	int lace;
@@ -1945,7 +1946,7 @@ AlpSaveScreen(ScreenPtr pScreen, int mode)
 static void
 AlpSetClock(CirPtr pCir, vgaHWPtr hwp, int freq)
 {
-	int num, den, ffreq;
+	int num, den, ffreq, usemclk, diff, mclk;
 	CARD8 tmp;
 
 #ifdef ALP_DEBUG
@@ -1956,9 +1957,22 @@ AlpSetClock(CirPtr pCir, vgaHWPtr hwp, int freq)
 	if (!CirrusFindClock(&ffreq, pCir->MaxClock, &num, &den))
 		return;
 
+	/* Calculate the MCLK. */
+	mclk = 14318 * (hwp->readSeq(hwp, 0x1F) & 0x3F) / 8;	/* XXX */
+	/*
+	 * Favour MCLK as VLCK if it matches as good as the found clock,
+	 * or if it is within 0.2 MHz of the request clock. A VCLK close
+	 * to MCLK can cause instability.
+	 */
+	diff = abs(freq - ffreq);
+	if (abs(mclk - ffreq) <= diff + 10 || abs(mclk - freq) <= 200)
+		usemclk = TRUE;
+	else
+		usemclk = FALSE;
+
 #ifdef ALP_DEBUG
-	ErrorF("AlpSetClock: nom=%x den=%x ffreq=%d.%03dMHz\n",
-		num, den, ffreq / 1000, ffreq % 1000);
+	ErrorF("AlpSetClock: nom=%x den=%x ffreq=%d.%03dMHz usemclk=%x\n",
+		num, den, ffreq / 1000, ffreq % 1000, usemclk);
 #endif
 	/* So - how do we use MCLK here for the VCLK ? */
 
