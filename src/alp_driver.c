@@ -11,7 +11,7 @@
  *    Guy DESBIEF
  */
 
-/* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/cirrus/alp_driver.c,v 1.36 2003/11/07 22:49:58 dawes Exp $ */
+/* $XFree86$ */
 
 /* All drivers should typically include these */
 #include "xf86.h"

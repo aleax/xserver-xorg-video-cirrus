@@ -1,6 +1,6 @@
 /* (c) Itai Nahshon */
 
-/* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/cirrus/lg_i2c.c,v 1.4 2000/12/06 15:35:17 eich Exp $ */
+/* $XFree86$ */
 
 #include "xf86.h"
 #include "xf86_OSproc.h"
