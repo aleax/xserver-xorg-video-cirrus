@@ -11,7 +11,7 @@
  *	Guy DESBIEF
  */
 
-/* $XFree86$ */
+/* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/cirrus/cir_driver.c,v 1.69 2003/06/18 16:17:38 eich Exp $ */
 
 /* All drivers should typically include these */
 #include "xf86.h"
