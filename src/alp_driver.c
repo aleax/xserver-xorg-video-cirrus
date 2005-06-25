@@ -250,7 +250,11 @@ static XF86ModuleVersionInfo alpVersRec =
  * This is the module init data.
  * Its name has to be the driver name followed by ModuleData.
  */
-XF86ModuleData cirrus_alpineModuleData = { &alpVersRec, alpSetup, NULL };
+_X_EXPORT XF86ModuleData cirrus_alpineModuleData = {
+    &alpVersRec,
+    alpSetup,
+    NULL
+};
 
 static pointer
 alpSetup(pointer module, pointer opts, int *errmaj, int *errmin)

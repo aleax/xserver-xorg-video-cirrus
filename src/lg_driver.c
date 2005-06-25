@@ -258,7 +258,11 @@ static XF86ModuleVersionInfo lgVersRec =
  * This is the module init data.
  * Its name has to be the driver name followed by ModuleData.
  */
-XF86ModuleData cirrus_lagunaModuleData = { &lgVersRec, lgSetup, NULL };
+_X_EXPORT XF86ModuleData cirrus_lagunaModuleData = {
+    &lgVersRec,
+    lgSetup,
+    NULL
+};
 
 static pointer
 lgSetup(pointer module, pointer opts, int *errmaj, int *errmin)
