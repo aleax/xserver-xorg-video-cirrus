@@ -271,13 +271,13 @@ alpSetup(pointer module, pointer opts, int *errmaj, int *errmin)
 
 #endif /* XFree86LOADER */
 
-const OptionInfoRec *
+_X_EXPORT const OptionInfoRec *
 AlpAvailableOptions(int chipid)
 {
     return CirOptions;
 }
 
-ScrnInfoPtr
+_X_EXPORT ScrnInfoPtr
 AlpProbe(int entity)
 {
     ScrnInfoPtr pScrn = NULL;

@@ -280,13 +280,13 @@ lgSetup(pointer module, pointer opts, int *errmaj, int *errmin)
 
 #endif /* XFree86LOADER */
 
-const OptionInfoRec *
+_X_EXPORT const OptionInfoRec *
 LgAvailableOptions(int chipid)
 {
     return LgOptions;
 }
 
-ScrnInfoPtr
+_X_EXPORT ScrnInfoPtr
 LgProbe(int entity)
 {
     ScrnInfoPtr pScrn = NULL;
