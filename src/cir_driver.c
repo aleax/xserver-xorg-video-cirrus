@@ -11,6 +11,10 @@
  *	Guy DESBIEF
  */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 /* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/cirrus/cir_driver.c,v 1.67 2001/05/15 10:19:37 eich Exp $ */
 
 /* All drivers should typically include these */
