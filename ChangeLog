@@ -1,3 +1,9 @@
+2005-11-28  Kevin E. Martin  <kem-at-freedesktop-dot-org>
+
+	* src/Makefile.am:
+	Separate cirrus driver into _drv, _alpine and _laguna components
+	as they are in the monolithic tree.
+
 2005-11-09  Kevin E. Martin  <kem-at-freedesktop-dot-org>
 
 	* configure.ac:

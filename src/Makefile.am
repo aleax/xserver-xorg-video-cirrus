@@ -24,22 +24,32 @@
 # _ladir passes a dummy rpath to libtool so the thing will actually link
 # TODO: -nostdlib/-Bstatic/-lgcc platform magic, not installing the .a, etc.
 AM_CFLAGS = @XORG_CFLAGS@
+
 cirrus_drv_la_LTLIBRARIES = cirrus_drv.la
 cirrus_drv_la_LDFLAGS = -module -avoid-version
 cirrus_drv_ladir = @moduledir@/drivers
-
 cirrus_drv_la_SOURCES = \
+         cir_dga.c \
+         cir_driver.c \
+         cir.h \
+         CirrusClk.c \
+         cir_shadow.c
+
+cirrus_alpine_la_LTLIBRARIES = cirrus_alpine.la
+cirrus_alpine_la_LDFLAGS = -module -avoid-version
+cirrus_alpine_ladir = @moduledir@/drivers
+cirrus_alpine_la_SOURCES = \
          alp_driver.c \
          alp.h \
          alp_hwcurs.c \
          alp_i2c.c \
          alp_xaa.c \
-         alp_xaam.c \
-         cir_dga.c \
-         cir_driver.c \
-         cir.h \
-         CirrusClk.c \
-         cir_shadow.c \
+         alp_xaam.c
+
+cirrus_laguna_la_LTLIBRARIES = cirrus_laguna.la
+cirrus_laguna_la_LDFLAGS = -module -avoid-version
+cirrus_laguna_ladir = @moduledir@/drivers
+cirrus_laguna_la_SOURCES = \
          lg_driver.c \
          lg.h \
          lg_hwcurs.c \
