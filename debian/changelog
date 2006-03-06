@@ -1,3 +1,10 @@
+xserver-xorg-video-cirrus (1:1.0.0.5-2) experimental; urgency=low
+
+  * Partial port of general/028_loader_speed_hack.diff to append _drv to the
+    cirrus_alpine and _laguna module names.
+
+ -- David Nusinow <dnusinow@debian.org>  Sun,  5 Mar 2006 21:48:10 -0500
+
 xserver-xorg-video-cirrus (1:1.0.0.5-1) experimental; urgency=low
 
   * First upload to Debian

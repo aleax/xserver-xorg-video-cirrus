@@ -1,0 +1,4 @@
+0b27f845827ed2abb2b148c07b2cead0  ./configure.ac
+4d7749e1c1e8f82c5b67c5a8f9925e10  ./src/Makefile.am
+40d4fb92638a70dc70ad70d4bf2efa38  ./man/Makefile.am
+d54c5968dbff880fb810b5175085e817  ./Makefile.am

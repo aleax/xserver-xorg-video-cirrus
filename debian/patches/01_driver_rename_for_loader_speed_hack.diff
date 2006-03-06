@@ -1,0 +1,34 @@
+Index: xf86-video-cirrus-X11R7.0-1.0.0.5/src/Makefile.am
+===================================================================
+--- xf86-video-cirrus-X11R7.0-1.0.0.5.orig/src/Makefile.am	2006-03-05 21:46:47.000000000 -0500
++++ xf86-video-cirrus-X11R7.0-1.0.0.5/src/Makefile.am	2006-03-05 21:47:32.000000000 -0500
+@@ -35,10 +35,10 @@
+          CirrusClk.c \
+          cir_shadow.c
+ 
+-cirrus_alpine_la_LTLIBRARIES = cirrus_alpine.la
+-cirrus_alpine_la_LDFLAGS = -module -avoid-version
+-cirrus_alpine_ladir = @moduledir@/drivers
+-cirrus_alpine_la_SOURCES = \
++cirrus_alpine_drv_la_LTLIBRARIES = cirrus_alpine_drv.la
++cirrus_alpine_drv_la_LDFLAGS = -module -avoid-version
++cirrus_alpine_drv_ladir = @moduledir@/drivers
++cirrus_alpine_drv_la_SOURCES = \
+          alp_driver.c \
+          alp.h \
+          alp_hwcurs.c \
+@@ -46,10 +46,10 @@
+          alp_xaa.c \
+          alp_xaam.c
+ 
+-cirrus_laguna_la_LTLIBRARIES = cirrus_laguna.la
+-cirrus_laguna_la_LDFLAGS = -module -avoid-version
+-cirrus_laguna_ladir = @moduledir@/drivers
+-cirrus_laguna_la_SOURCES = \
++cirrus_laguna_drv_la_LTLIBRARIES = cirrus_laguna_drv.la
++cirrus_laguna_drv_la_LDFLAGS = -module -avoid-version
++cirrus_laguna_drv_ladir = @moduledir@/drivers
++cirrus_laguna_drv_la_SOURCES = \
+          lg_driver.c \
+          lg.h \
+          lg_hwcurs.c \
