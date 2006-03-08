@@ -31,7 +31,7 @@ endif
 # kbd_drv.a isn't phenomenally useful; kbd_drv.so more so
 confflags += --disable-static
 
-build: patch build-stamp
+build: build-stamp
 build-stamp:
 	dh_testdir
 
@@ -44,7 +44,7 @@ build-stamp:
 
 	touch build-stamp
 
-clean: autoreconf xsfclean
+clean:
 	dh_testdir
 	dh_testroot
 	rm -f build-stamp
