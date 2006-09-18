@@ -1,8 +1,15 @@
-xserver-xorg-video-cirrus (1:1.1.0-3) UNRELEASED; urgency=low
+xserver-xorg-video-cirrus (1:1.1.0-3) unstable; urgency=low
 
+  [ Steve Langasek ]
   * Prepare for upload to unstable
 
- -- Steve Langasek <vorlon@debian.org>  Mon, 18 Sep 2006 03:36:47 -0700
+  [ Drew Parsons ]
+  * Standards version 3.7.2.
+  * Use debhelper 5.
+  * Use dh_installman to install man pages.
+  * Exclude .la files from dh_install.
+
+ -- Drew Parsons <dparsons@debian.org>  Tue, 19 Sep 2006 00:30:40 +1000
 
 xserver-xorg-video-cirrus (1:1.1.0-2) experimental; urgency=low
 
