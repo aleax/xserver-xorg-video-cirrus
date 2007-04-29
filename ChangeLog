@@ -1,67 +1,254 @@
-2006-04-06  Adam Jackson  <ajax@freedesktop.org>
+commit 43d9703ddf79314015b66c81c671ef254fbb3934
+Author: Alan Coopersmith <alan.coopersmith@sun.com>
+Date:   Thu Mar 1 10:41:58 2007 -0800
 
-	* configure.ac:
-	* src/CirrusClk.c:
-	* src/alp_driver.c:
-	* src/alp_hwcurs.c:
-	* src/alp_i2c.c:
-	* src/alp_xaa.c:
-	* src/alp_xaam.c:
-	* src/cir.h:
-	* src/cir_dga.c:
-	* src/cir_driver.c:
-	* src/cir_shadow.c:
-	* src/lg_driver.c:
-	* src/lg_hwcurs.c:
-	* src/lg_i2c.c:
-	* src/lg_xaa.c:
-	Unlibcwrap.  Bump server version requirement.  Bump to 1.1.0.
+    Replace references to XFree86/XF86Config in man page
 
-	* src/cir_driver.c:
-	VERSION -> CIR_VERSION
+commit 1ba52ebddd605c9341ff7f0a880c272a78f467ed
+Author: Adam Jackson <ajax@nwnk.net>
+Date:   Fri Apr 7 18:57:40 2006 +0000
 
-2005-12-20  Kevin E. Martin  <kem-at-freedesktop-dot-org>
+    VERSION -> CIR_VERSION
 
-	* configure.ac:
-	Update package version for X11R7 release.
+commit e6588f26e12bb737551b9448911c31129978ea85
+Author: Adam Jackson <ajax@nwnk.net>
+Date:   Fri Apr 7 18:44:20 2006 +0000
 
-2005-12-14  Kevin E. Martin  <kem-at-freedesktop-dot-org>
+    Unlibcwrap. Bump server version requirement. Bump to 1.1.0.
 
-	* configure.ac:
-	Update package version number for final X11R7 release candidate.
+commit 9ca7e7fcfc53ae9054661219aa366409089c3f8d
+Author: Kevin E Martin <kem@kem.org>
+Date:   Wed Dec 21 02:29:59 2005 +0000
 
-2005-12-06  Kevin E. Martin  <kem-at-freedesktop-dot-org>
+    Update package version for X11R7 release.
 
-	* man/Makefile.am:
-	Change *man_SOURCES ==> *man_PRE to fix autotools warnings.
+commit 2d8e201ee988646bd8601dbc2b8c32571fdac017
+Author: Adam Jackson <ajax@nwnk.net>
+Date:   Mon Dec 19 16:25:52 2005 +0000
 
-2005-12-03  Kevin E. Martin  <kem-at-freedesktop-dot-org>
+    Stub COPYING files
 
-	* configure.ac:
-	Update package version number for X11R7 RC3 release.
+commit dbf028bd0148d2317e7b87fad857ad0f7accd234
+Author: Kevin E Martin <kem@kem.org>
+Date:   Thu Dec 15 00:24:16 2005 +0000
 
-2005-12-01  Kevin E. Martin  <kem-at-freedesktop-dot-org>
+    Update package version number for final X11R7 release candidate.
 
-	* configure.ac:
-	Remove extraneous AC_MSG_RESULT.
+commit 4456ba0a597443aed32bf686b79c22ef19ac0102
+Author: Kevin E Martin <kem@kem.org>
+Date:   Tue Dec 6 22:48:33 2005 +0000
 
-2005-11-29  Adam Jackson  <ajax@freedesktop.org>
+    Change *man_SOURCES ==> *man_PRE to fix autotools warnings.
 
-	* configure.ac:
-	Only build dlloader modules by default.
+commit 134440cd4ab932803b100bf7767776fb0ffb2d0d
+Author: Kevin E Martin <kem@kem.org>
+Date:   Sat Dec 3 05:49:33 2005 +0000
 
-2005-11-28  Kevin E. Martin  <kem-at-freedesktop-dot-org>
+    Update package version number for X11R7 RC3 release.
 
-	* src/Makefile.am:
-	Separate cirrus driver into _drv, _alpine and _laguna components
-	as they are in the monolithic tree.
+commit 2f48ba72c2009bc3c7b83d2b1415df897a2b26e4
+Author: Kevin E Martin <kem@kem.org>
+Date:   Fri Dec 2 02:16:07 2005 +0000
 
-2005-11-09  Kevin E. Martin  <kem-at-freedesktop-dot-org>
+    Remove extraneous AC_MSG_RESULT.
 
-	* configure.ac:
-	Update package version number for X11R7 RC2 release.
+commit 444b38c206b6a7c037615694c2a7ada84380698e
+Author: Adam Jackson <ajax@nwnk.net>
+Date:   Tue Nov 29 23:29:58 2005 +0000
 
-2005-11-01  Kevin E. Martin  <kem-at-freedesktop-dot-org>
+    Only build dlloader modules by default.
 
-	* configure.ac:
-	Update pkgcheck dependencies to work with separate build roots.
+commit 6d3a17ba84343fb5c0cf75039a4e5cbd3274cfc3
+Author: Alan Coopersmith <Alan.Coopersmith@sun.com>
+Date:   Mon Nov 28 22:04:08 2005 +0000
+
+    Change *mandir targets to use new *_MAN_DIR variables set by xorg-macros.m4
+        update to fix bug #5167 (Linux prefers *.1x man pages in man1 subdir)
+
+commit 2820e709f8d2366cdaf2aa7df8b9ad44fafc1886
+Author: Kevin E Martin <kem@kem.org>
+Date:   Mon Nov 28 16:05:38 2005 +0000
+
+    Separate cirrus driver into _drv, _alpine and _laguna components as they
+        are in the monolithic tree.
+
+commit 53e79befceacccee15bfa47b56b34b180f3039cb
+Author: Eric Anholt <anholt@freebsd.org>
+Date:   Mon Nov 21 10:49:11 2005 +0000
+
+    Add .cvsignores for drivers.
+
+commit ad036f9f6ef53fa454f63f4426a17e55d7598343
+Author: Kevin E Martin <kem@kem.org>
+Date:   Wed Nov 9 21:15:14 2005 +0000
+
+    Update package version number for X11R7 RC2 release.
+
+commit 4c88ee7e2f5297a260b8d4871869cfa0494d157f
+Author: Kevin E Martin <kem@kem.org>
+Date:   Tue Nov 1 15:08:52 2005 +0000
+
+    Update pkgcheck depedencies to work with separate build roots.
+
+commit 44e282ad51518a06f6c5cd8c871b0bcd08ec0477
+Author: Kevin E Martin <kem@kem.org>
+Date:   Wed Oct 19 02:48:02 2005 +0000
+
+    Update package version number for RC1 release.
+
+commit 2fe8297b577524e052987756a4902a20b7f41606
+Author: Alan Coopersmith <Alan.Coopersmith@sun.com>
+Date:   Tue Oct 18 00:01:53 2005 +0000
+
+    Use @DRIVER_MAN_SUFFIX@ instead of $(DRIVER_MAN_SUFFIX) in macro
+        substitutions to work better with BSD make
+
+commit 2b3c8a3d754b4511ae7f90051c5ed995b1e45765
+Author: Adam Jackson <ajax@nwnk.net>
+Date:   Mon Oct 17 22:57:32 2005 +0000
+
+    More 1.7 braindamage: define EXTRA_DIST in terms of @DRIVER_NAME@ instead
+        of indirectly
+
+commit a5f509023c24021c5eb1a272a4423cbfe4b634c5
+Author: Alan Coopersmith <Alan.Coopersmith@sun.com>
+Date:   Mon Oct 17 00:09:02 2005 +0000
+
+    Use sed & cpp to substitute variables in driver man pages
+
+commit 96c957a338d3aca2756b86680c052f602fee1e10
+Author: Søren Sandmann Pedersen <sandmann@daimi.au.dk>
+Date:   Tue Sep 27 20:53:19 2005 +0000
+
+    Update build system for apm, chips, cirrus, glint, i740, mga, neomagic,
+        newport to accomodate various new documentation and utility files.
+
+commit 60d397b933810bf2a377c00b3b2ce1ea5048b384
+Author: Daniel Stone <daniel@fooishbar.org>
+Date:   Thu Aug 18 09:03:46 2005 +0000
+
+    Update autogen.sh to one that does objdir != srcdir.
+
+commit 31a03e7fac786df5b3e51586a9f338cf019210a9
+Author: Kevin E Martin <kem@kem.org>
+Date:   Fri Jul 29 21:22:43 2005 +0000
+
+    Various changes preparing packages for RC0:
+    - Verify and update package version numbers as needed
+    - Implement versioning scheme
+    - Change bug address to point to bugzilla bug entry form
+    - Disable loadable i18n in libX11 by default (use --enable-loadable-i18n to
+        reenable it)
+    - Fix makedepend to use pkgconfig and pass distcheck
+    - Update build script to build macros first
+    - Update modular Xorg version
+
+commit 269bb85534031d11bd008b530e39e52b86734832
+Author: Søren Sandmann Pedersen <sandmann@daimi.au.dk>
+Date:   Mon Jul 25 23:46:27 2005 +0000
+
+    src/Makefile.am
+
+commit 6ced8240c5d328b1edc2ba54d49f3d362e596244
+Author: Søren Sandmann Pedersen <sandmann@daimi.au.dk>
+Date:   Mon Jul 25 23:46:15 2005 +0000
+
+    man/Makefile.am
+
+commit c8160cf29932bef0a9b850c068587d1f1ad579ba
+Author: Søren Sandmann Pedersen <sandmann@daimi.au.dk>
+Date:   Mon Jul 25 23:45:41 2005 +0000
+
+    Build system for Cirrus driver
+
+commit 133e8b674546c50db80cb39d0ca526d6fb1ed12b
+Author: Adam Jackson <ajax@nwnk.net>
+Date:   Mon Jul 11 02:29:46 2005 +0000
+
+    Prep for modular builds by adding guarded #include "config.h" everywhere.
+
+commit 88c1e79c6b3fff064ca5ba2cc500714707d605be
+Author: Adam Jackson <ajax@nwnk.net>
+Date:   Sun Jun 26 04:38:12 2005 +0000
+
+    Bug #3628: Fix video driver submodule visibility.
+
+commit 57144d6c9ea250b1d9a40bac4c70180593c1ca2c
+Author: Adam Jackson <ajax@nwnk.net>
+Date:   Sat Jun 25 21:16:54 2005 +0000
+
+    Bug #3626: _X_EXPORT tags for video and input drivers.
+
+commit 264b155fdc7f0f860a5cfa5932fb683e5d1934ef
+Author: Daniel Stone <daniel@fooishbar.org>
+Date:   Wed Apr 20 12:25:23 2005 +0000
+
+    Fix includes right throughout the Xserver tree:
+    change "foo.h" to <X11/foo.h> for core headers, e.g. X.h, Xpoll.h;
+    change "foo.h", "extensions/foo.h" and "X11/foo.h" to
+        <X11/extensions/foo.h> for extension headers, e.g. Xv.h;
+    change "foo.[ch]" to <X11/Xtrans/foo.[ch]> for Xtrans files.
+
+commit 979f1e0c830891c9e4f0b4837980766cc7eac3d7
+Author: Adam Jackson <ajax@nwnk.net>
+Date:   Fri Jul 30 20:30:52 2004 +0000
+
+    Bug #400 (partial): Driver fixes for the dlloader. When using dlloader, all
+        framebuffer formats except cfb and the overlay modes should work, and
+        r128 and radeon need to be loaded from the ati driver (both issues to
+        be fixed soon). Tested on i740, s3virge, mach64, tdfx, vesa, and vga
+        drivers. elfloader users shouldn't be affected.
+
+commit c15b8a386fc6915e2ec13b0b8b9a15eb7277d665
+Author: Eric Anholt <anholt@freebsd.org>
+Date:   Wed Jun 16 09:23:02 2004 +0000
+
+    DRI XFree86-4_3_99_12-merge import
+
+commit 5308a983f77e8cd96538c4637062aa29a705caa3
+Author: Egbert Eich <eich@suse.de>
+Date:   Fri Apr 23 19:28:21 2004 +0000
+
+    Merging XORG-CURRENT into trunk
+
+commit fb8a70faaa717c7b998ad531e8b0c0620f56a731
+Author: Egbert Eich <eich@suse.de>
+Date:   Sun Mar 14 08:33:20 2004 +0000
+
+    Importing vendor version xf86-4_4_99_1 on Sun Mar 14 00:26:39 PST 2004
+
+commit d54af9086282437c9928ba667a763bff2cbaf740
+Author: Egbert Eich <eich@suse.de>
+Date:   Wed Mar 3 12:12:18 2004 +0000
+
+    Importing vendor version xf86-4_4_0 on Wed Mar 3 04:09:24 PST 2004
+
+commit cc1c352f76fc1138223cab6449bdbf5538400e27
+Author: Egbert Eich <eich@suse.de>
+Date:   Thu Feb 26 13:35:52 2004 +0000
+
+    readding XFree86's cvs IDs
+
+commit 99774def5b55af0af2d53f78c4e09000c9105c29
+Author: Egbert Eich <eich@suse.de>
+Date:   Thu Feb 26 09:23:18 2004 +0000
+
+    Importing vendor version xf86-4_3_99_903 on Wed Feb 26 01:21:00 PST 2004
+
+commit 08e4d07d7203d7db746839725d632756ede8816d
+Author: Kaleb Keithley <kaleb@freedesktop.org>
+Date:   Tue Nov 25 19:28:36 2003 +0000
+
+    XFree86 4.3.99.16 Bring the tree up to date for the Cygwin folks
+
+commit 2c120fef2e3e4fa5751e29e6e80e70edba6e3e7a
+Author: Kaleb Keithley <kaleb@freedesktop.org>
+Date:   Fri Nov 14 16:48:55 2003 +0000
+
+    XFree86 4.3.0.1
+
+commit 97c9ec2c1201ec09c359f92817033281045c537e
+Author: Kaleb Keithley <kaleb@freedesktop.org>
+Date:   Fri Nov 14 16:48:55 2003 +0000
+
+    Initial revision
