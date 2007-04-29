@@ -10,6 +10,7 @@ xserver-xorg-video-cirrus (1:1.1.0-6) UNRELEASED; urgency=low
   * Replaces/Conflicts: xserver-xorg-driver-cirrus.
 
   [ Brice Goglin ]
+  * Pull upstream manpage fix 43d9703ddf79314015b66c81c671ef254fbb3934
   * Install the upstream changelog.
   * Bump Build-Depends: xserver-xorg-dev to >= 2:1.2.99.902
     (needed to let xsfbs get access to serverminver).
