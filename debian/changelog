@@ -1,4 +1,4 @@
-xserver-xorg-video-cirrus (1:1.1.0-4) UNRELEASED; urgency=low
+xserver-xorg-video-cirrus (1:1.1.0-6) UNRELEASED; urgency=low
 
   [ Julien Cristau ]
   * Add link to xserver-xorg-core bug script, so that bugreports contain
@@ -10,6 +10,13 @@ xserver-xorg-video-cirrus (1:1.1.0-4) UNRELEASED; urgency=low
   * Replaces/Conflicts: xserver-xorg-driver-cirrus.
 
  -- Timo Aaltonen <tjaalton@cc.hut.fi>  Tue, 24 Apr 2007 13:03:59 +0300
+
+xserver-xorg-video-cirrus (1:1.1.0-5) experimental; urgency=low
+
+  * Minor updates from upstream
+  * Generate server dependencies automatically from the ABI
+
+ -- David Nusinow <dnusinow@debian.org>  Wed, 21 Feb 2007 22:54:19 -0500
 
 xserver-xorg-video-cirrus (1:1.1.0-3) unstable; urgency=low
 
