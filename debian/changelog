@@ -1,4 +1,4 @@
-xserver-xorg-video-cirrus (1:1.1.0-6) UNRELEASED; urgency=low
+xserver-xorg-video-cirrus (1:1.1.0-6) experimental; urgency=low
 
   [ Julien Cristau ]
   * Add link to xserver-xorg-core bug script, so that bugreports contain
@@ -17,11 +17,12 @@ xserver-xorg-video-cirrus (1:1.1.0-6) UNRELEASED; urgency=low
   * Add XS-Vcs-*.
   * Add a link to www.X.org and a reference to the xf86-video-cirrus
     module in the long description.
-  * Remove Fabio from uploaders with his permission. He's always welcome back.
+  * Add myself to uploaders, and remove Branden and Fabio with their
+    permission.
   * Build against xserver 1.4.
   * Add upstream URL to debian/copyright.
 
- -- Brice Goglin <Brice.Goglin@ens-lyon.org>  Sun, 29 Apr 2007 10:53:55 +0200
+ -- Brice Goglin <bgoglin@debian.org>  Thu, 13 Sep 2007 22:09:13 +0200
 
 xserver-xorg-video-cirrus (1:1.1.0-5) experimental; urgency=low
 
