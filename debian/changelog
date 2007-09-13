@@ -18,6 +18,8 @@ xserver-xorg-video-cirrus (1:1.1.0-6) UNRELEASED; urgency=low
   * Add a link to www.X.org and a reference to the xf86-video-cirrus
     module in the long description.
   * Remove Fabio from uploaders with his permission. He's always welcome back.
+  * Build against xserver 1.4.
+  * Add upstream URL to debian/copyright.
 
  -- Brice Goglin <Brice.Goglin@ens-lyon.org>  Sun, 29 Apr 2007 10:53:55 +0200
 
