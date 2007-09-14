@@ -1,3 +1,11 @@
+xserver-xorg-video-cirrus (1:1.1.0-7) experimental; urgency=low
+
+  * Add 01_gen_pci_ids.diff
+    This patch provides a set of PCI ID's supported by this driver so that it
+    can be autoloaded by the X server
+
+ -- David Nusinow <dnusinow@debian.org>  Fri, 14 Sep 2007 00:18:25 -0400
+
 xserver-xorg-video-cirrus (1:1.1.0-6) experimental; urgency=low
 
   [ Julien Cristau ]
