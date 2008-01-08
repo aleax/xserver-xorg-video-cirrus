@@ -56,8 +56,13 @@
 /* Framebuffer memory manager */
 #include "xf86fbman.h"
 
+#if HAVE_XF4BPP
 #include "xf4bpp.h"
+#endif
+#if HAVE_XF1BPP
 #include "xf1bpp.h"
+#endif
+
 #include "fb.h"
 
 
@@ -1083,6 +1088,7 @@ AlpPreInit(ScrnInfoPtr pScrn, int flags)
 
 	/* Load bpp-specific modules */
 	switch (pScrn->bitsPerPixel) {
+#ifdef HAVE_XF1BPP
 	case 1:  
 	    if (xf86LoadSubModule(pScrn, "xf1bpp") == NULL) {
 	        AlpFreeRec(pScrn);
@@ -1090,6 +1096,8 @@ AlpPreInit(ScrnInfoPtr pScrn, int flags)
 	    } 
 	    xf86LoaderReqSymbols("xf1bppScreenInit",NULL);
 	    break;
+#endif
+#ifdef HAVE_XF4BPP
 	case 4:  
 	    if (xf86LoadSubModule(pScrn, "xf4bpp") == NULL) {
 	        AlpFreeRec(pScrn);
@@ -1097,6 +1105,7 @@ AlpPreInit(ScrnInfoPtr pScrn, int flags)
 	    } 
 	    xf86LoaderReqSymbols("xf4bppScreenInit",NULL);	    
 	    break;
+#endif
 	case 8:
 	case 16:
 	case 24:
@@ -1576,18 +1585,22 @@ AlpScreenInit(int scrnIndex, ScreenPtr pScreen, int argc, char **argv)
 	 */
 
 	switch (pScrn->bitsPerPixel) {
+#ifdef HAVE_XF1BPP
 	case 1:
 	    ret = xf1bppScreenInit(pScreen, FbBase,
 				   width, height,
 				   pScrn->xDpi, pScrn->yDpi,
 				   displayWidth);
 	    break;
+#endif
+#ifdef HAVE_XF4BPP
 	case 4:
 	    ret = xf4bppScreenInit(pScreen, FbBase,
 				   width, height,
 				   pScrn->xDpi, pScrn->yDpi,
 				   displayWidth);
 	    break;
+#endif
 	case 8:
 	case 16:
 	case 24:
