@@ -570,9 +570,9 @@ AlpPreInit(ScrnInfoPtr pScrn, int flags)
 	pCir->Chipset = pCir->pEnt->chipset;
 	/* Find the PCI info for this screen */
 	pCir->PciInfo = xf86GetPciInfoForEntity(pCir->pEnt->index);
-	pCir->PciTag = pciTag(pCir->PciInfo->bus,
-									pCir->PciInfo->device,
-									pCir->PciInfo->func);
+	pCir->PciTag = pciTag(PCI_DEV_BUS(pCir->PciInfo),
+			      PCI_DEV_DEV(pCir->PciInfo),
+			      PCI_DEV_FUNC(pCir->PciInfo));
 
     if (xf86LoadSubModule(pScrn, "int10")) {
 	xf86LoaderReqSymLists(int10Symbols,NULL);
@@ -583,8 +583,9 @@ AlpPreInit(ScrnInfoPtr pScrn, int flags)
 	 * This is a hack: We restore the PCI base regs as some Colorgraphic
 	 * BIOSes tend to mess them up
 	 */
-	pciWriteLong(pCir->PciTag,0x10,pCir->PciInfo->memBase[0]);
-	pciWriteLong(pCir->PciTag,0x14,pCir->PciInfo->memBase[1]);
+
+	PCI_WRITE_LONG(pCir->PciInfo, 0x10, PCI_REGION_BASE(pCir->PciInfo, 0, REGION_MEM));
+	PCI_WRITE_LONG(pCir->PciInfo, 0x14, PCI_REGION_BASE(pCir->PciInfo, 1, REGION_MEM));
 	
     }
 
@@ -684,7 +685,7 @@ AlpPreInit(ScrnInfoPtr pScrn, int flags)
 		xf86DrvMsg(pScrn->scrnIndex, X_CONFIG, "ChipRev override: %d\n",
 			pCir->ChipRev);
 	} else {
-		pCir->ChipRev = pCir->PciInfo->chipRev;
+ 	        pCir->ChipRev = PCI_DEV_REVISION(pCir->PciInfo);
 	}
 
 	/* Find the frame buffer base address */
@@ -698,10 +699,10 @@ AlpPreInit(ScrnInfoPtr pScrn, int flags)
 		pCir->FbAddress = pCir->pEnt->device->MemBase;
 		from = X_CONFIG;
 	} else {
-		if (pCir->PciInfo->memBase[0] != 0) {
+		if (PCI_REGION_BASE(pCir->PciInfo, 0, REGION_MEM) != 0) {
 			/* 5446B and 5480 use mask of 0xfe000000.
 			   5446A uses 0xff000000. */
-			pCir->FbAddress = pCir->PciInfo->memBase[0] & 0xff000000;
+			pCir->FbAddress = PCI_REGION_BASE(pCir->PciInfo, 0, REGION_MEM) & 0xff000000;
 			from = X_PROBED;
 		} else {
 			xf86DrvMsg(pScrn->scrnIndex, X_ERROR,
@@ -724,8 +725,8 @@ AlpPreInit(ScrnInfoPtr pScrn, int flags)
 	    pCir->IOAddress = pCir->pEnt->device->IOBase;
 		from = X_CONFIG;
 	} else {
-		if (pCir->PciInfo->memBase[1] != 0) {
-			pCir->IOAddress = pCir->PciInfo->memBase[1] & 0xfffff000;
+		if (PCI_REGION_BASE(pCir->PciInfo, 1, REGION_MEM) != 0) {
+			pCir->IOAddress = PCI_REGION_BASE(pCir->PciInfo, 1, REGION_MEM) & 0xfffff000;
 			from = X_PROBED;
 		} else {
 			xf86DrvMsg(pScrn->scrnIndex, X_ERROR,
