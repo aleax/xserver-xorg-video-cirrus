@@ -351,7 +351,8 @@ AlpCountRam(ScrnInfoPtr pScrn)
     
     /* Map the Alp memory and MMIO areas */
     pCir->FbMapSize = 1024*1024; /* XX temp */
-    pCir->IoMapSize = 0x4000;	/* 16K for moment */
+    if (!pCir->IoMapSize)
+    	pCir->IoMapSize = 0x4000;	/* 16K for moment */
     if (!CirMapMem(pCir, pScrn->scrnIndex))
 	return 0;
 
@@ -732,6 +733,7 @@ AlpPreInit(ScrnInfoPtr pScrn, int flags)
 	} else {
 		if (PCI_REGION_BASE(pCir->PciInfo, 1, REGION_MEM) != 0) {
 			pCir->IOAddress = PCI_REGION_BASE(pCir->PciInfo, 1, REGION_MEM) & 0xfffff000;
+			pCir->IoMapSize = PCI_REGION_SIZE(pCir->PciInfo, 1);
 			from = X_PROBED;
 		} else {
 			xf86DrvMsg(pScrn->scrnIndex, X_ERROR,
