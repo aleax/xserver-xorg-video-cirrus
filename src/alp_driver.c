@@ -602,7 +602,7 @@ AlpPreInit(ScrnInfoPtr pScrn, int flags)
 	 * The first thing we should figure out is the depth, bpp, etc.
 	 * We support both 24bpp and 32bpp layouts, so indicate that.
 	 */
-	if (!xf86SetDepthBpp(pScrn, 0, 0, 0, Support24bppFb | Support32bppFb |
+	if (!xf86SetDepthBpp(pScrn, 0, 0, 24, Support24bppFb | Support32bppFb |
 				SupportConvert32to24 | PreferConvert32to24)) {
 		return FALSE;
 	} else {
