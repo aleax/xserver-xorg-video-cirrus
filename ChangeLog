@@ -1,3 +1,74 @@
+commit 5dfd5d1772e2119c6b54f4548ae359cc9483e8fc
+Author: Adam Jackson <ajax@redhat.com>
+Date:   Wed May 21 15:43:45 2008 -0400
+
+    cirrus 1.2.1
+
+commit e44db96ed07ff1425a1a465ab32fd2d53a81b10c
+Author: Adam Jackson <ajax@redhat.com>
+Date:   Mon Mar 24 14:54:13 2008 -0400
+
+    Bug #10715: Fix depth configuration for alpine chips.
+    
+    In particular, don't try to set up 24+32 on the chip that qemu emulates,
+    since it doesn't work, either in qemu or in hardware.
+
+commit e9d517d8bd7398aa9ca33ceb64db46d659f70707
+Author: Adam Jackson <ajax@redhat.com>
+Date:   Wed Mar 19 13:45:30 2008 -0400
+
+    chips 1.2.0
+
+commit 0bb813fa212b0c349b92c3ae2f9165738003533d
+Author: Dave Airlie <airlied@linux.ie>
+Date:   Thu Mar 13 12:44:21 2008 +1000
+
+    cirrus: set default depth to 24bpp
+    
+    this fixes autoconfiguation and it shouldn't override anything else.
+
+commit 2cece73303455fb9a28e723d6b8c1e3eb867b8ed
+Author: Matthieu Herrb <matthieu@bluenote.herrb.net>
+Date:   Sat Mar 8 23:27:13 2008 +0100
+
+    Makefile.am: nuke RCS Id
+
+commit 78ce737e57867472c8166135a4dccd06eb1b2023
+Author: Dave Airlie <airlied@redhat.com>
+Date:   Mon Jan 21 18:16:33 2008 +1000
+
+    fixup iomapsize so we only map the 4k not 16k which is an error
+
+commit 25abf8e9b55efe51b9ef0fcde3b98c38bf3a7ba6
+Author: Dave Airlie <airlied@redhat.com>
+Date:   Tue Jan 8 15:49:24 2008 +1000
+
+    make dist check pass
+
+commit 8a33d2b5a820789309688855c81a4b11f8283500
+Author: Dave Airlie <airlied@redhat.com>
+Date:   Tue Jan 8 15:48:00 2008 +1000
+
+    test for 1/4 bpp in case server is configured with them off
+
+commit 46e982ec0208bf7a32d47cd7cf7b1895e7bbfe1d
+Author: Dave Airlie <airlied@redhat.com>
+Date:   Tue Jan 8 15:06:33 2008 +1000
+
+    cirrus initial pci access support
+
+commit 6d114041dc22763aa89ef6a4f4af3246de3e3b1b
+Author: Brice Goglin <bgoglin@debian.org>
+Date:   Tue Aug 7 10:26:40 2007 +0200
+
+    Define CIR_*_VERSION* using PACKAGE_VERSION_*
+
+commit 6438659655d3cc23e39be9c0c9673c3247282997
+Author: Alan Coopersmith <alan.coopersmith@sun.com>
+Date:   Thu Mar 1 10:42:30 2007 -0800
+
+     renamed: .cvsignore -> .gitignore
+
 commit 43d9703ddf79314015b66c81c671ef254fbb3934
 Author: Alan Coopersmith <alan.coopersmith@sun.com>
 Date:   Thu Mar 1 10:41:58 2007 -0800

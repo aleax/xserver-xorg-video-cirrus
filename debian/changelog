@@ -1,3 +1,9 @@
+xserver-xorg-video-cirrus (1:1.2.1-1) UNRELEASED; urgency=low
+
+  * New upstream release.
+
+ -- Brice Goglin <bgoglin@debian.org>  Thu, 22 May 2008 08:24:15 +0200
+
 xserver-xorg-video-cirrus (1:1.1.0-8) unstable; urgency=low
 
   * Upload to unstable
