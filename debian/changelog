@@ -1,4 +1,4 @@
-xserver-xorg-video-cirrus (1:1.2.1-1) UNRELEASED; urgency=low
+xserver-xorg-video-cirrus (1:1.2.1-1) unstable; urgency=low
 
   * New upstream release.
   * Remove XS- prefix to Vcs-* fields in debian/rules.
@@ -8,7 +8,7 @@ xserver-xorg-video-cirrus (1:1.2.1-1) UNRELEASED; urgency=low
     dpkg-shlibdeps to shut up about symbols it can't find.
     + Build-depend on dpkg-dev >= 1.14.17.
 
- -- Brice Goglin <bgoglin@debian.org>  Thu, 22 May 2008 08:27:52 +0200
+ -- Brice Goglin <bgoglin@debian.org>  Thu, 22 May 2008 08:34:50 +0200
 
 xserver-xorg-video-cirrus (1:1.1.0-8) unstable; urgency=low
 
