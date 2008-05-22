@@ -56,8 +56,13 @@
 /* Framebuffer memory manager */
 #include "xf86fbman.h"
 
+#if HAVE_XF4BPP
 #include "xf4bpp.h"
+#endif
+#if HAVE_XF1BPP
 #include "xf1bpp.h"
+#endif
+
 #include "fb.h"
 
 
@@ -346,7 +351,8 @@ AlpCountRam(ScrnInfoPtr pScrn)
     
     /* Map the Alp memory and MMIO areas */
     pCir->FbMapSize = 1024*1024; /* XX temp */
-    pCir->IoMapSize = 0x4000;	/* 16K for moment */
+    if (!pCir->IoMapSize)
+    	pCir->IoMapSize = 0x4000;	/* 16K for moment */
     if (!CirMapMem(pCir, pScrn->scrnIndex))
 	return 0;
 
@@ -570,9 +576,9 @@ AlpPreInit(ScrnInfoPtr pScrn, int flags)
 	pCir->Chipset = pCir->pEnt->chipset;
 	/* Find the PCI info for this screen */
 	pCir->PciInfo = xf86GetPciInfoForEntity(pCir->pEnt->index);
-	pCir->PciTag = pciTag(pCir->PciInfo->bus,
-									pCir->PciInfo->device,
-									pCir->PciInfo->func);
+	pCir->PciTag = pciTag(PCI_DEV_BUS(pCir->PciInfo),
+			      PCI_DEV_DEV(pCir->PciInfo),
+			      PCI_DEV_FUNC(pCir->PciInfo));
 
     if (xf86LoadSubModule(pScrn, "int10")) {
 	xf86LoaderReqSymLists(int10Symbols,NULL);
@@ -583,8 +589,9 @@ AlpPreInit(ScrnInfoPtr pScrn, int flags)
 	 * This is a hack: We restore the PCI base regs as some Colorgraphic
 	 * BIOSes tend to mess them up
 	 */
-	pciWriteLong(pCir->PciTag,0x10,pCir->PciInfo->memBase[0]);
-	pciWriteLong(pCir->PciTag,0x14,pCir->PciInfo->memBase[1]);
+
+	PCI_WRITE_LONG(pCir->PciInfo, 0x10, PCI_REGION_BASE(pCir->PciInfo, 0, REGION_MEM));
+	PCI_WRITE_LONG(pCir->PciInfo, 0x14, PCI_REGION_BASE(pCir->PciInfo, 1, REGION_MEM));
 	
     }
 
@@ -595,7 +602,7 @@ AlpPreInit(ScrnInfoPtr pScrn, int flags)
 	 * The first thing we should figure out is the depth, bpp, etc.
 	 * We support both 24bpp and 32bpp layouts, so indicate that.
 	 */
-	if (!xf86SetDepthBpp(pScrn, 0, 0, 0, Support24bppFb | Support32bppFb |
+	if (!xf86SetDepthBpp(pScrn, 0, 0, 24, Support24bppFb | Support32bppFb |
 				SupportConvert32to24 | PreferConvert32to24)) {
 		return FALSE;
 	} else {
@@ -684,7 +691,7 @@ AlpPreInit(ScrnInfoPtr pScrn, int flags)
 		xf86DrvMsg(pScrn->scrnIndex, X_CONFIG, "ChipRev override: %d\n",
 			pCir->ChipRev);
 	} else {
-		pCir->ChipRev = pCir->PciInfo->chipRev;
+ 	        pCir->ChipRev = PCI_DEV_REVISION(pCir->PciInfo);
 	}
 
 	/* Find the frame buffer base address */
@@ -698,10 +705,10 @@ AlpPreInit(ScrnInfoPtr pScrn, int flags)
 		pCir->FbAddress = pCir->pEnt->device->MemBase;
 		from = X_CONFIG;
 	} else {
-		if (pCir->PciInfo->memBase[0] != 0) {
+		if (PCI_REGION_BASE(pCir->PciInfo, 0, REGION_MEM) != 0) {
 			/* 5446B and 5480 use mask of 0xfe000000.
 			   5446A uses 0xff000000. */
-			pCir->FbAddress = pCir->PciInfo->memBase[0] & 0xff000000;
+			pCir->FbAddress = PCI_REGION_BASE(pCir->PciInfo, 0, REGION_MEM) & 0xff000000;
 			from = X_PROBED;
 		} else {
 			xf86DrvMsg(pScrn->scrnIndex, X_ERROR,
@@ -724,8 +731,9 @@ AlpPreInit(ScrnInfoPtr pScrn, int flags)
 	    pCir->IOAddress = pCir->pEnt->device->IOBase;
 		from = X_CONFIG;
 	} else {
-		if (pCir->PciInfo->memBase[1] != 0) {
-			pCir->IOAddress = pCir->PciInfo->memBase[1] & 0xfffff000;
+		if (PCI_REGION_BASE(pCir->PciInfo, 1, REGION_MEM) != 0) {
+			pCir->IOAddress = PCI_REGION_BASE(pCir->PciInfo, 1, REGION_MEM) & 0xfffff000;
+			pCir->IoMapSize = PCI_REGION_SIZE(pCir->PciInfo, 1);
 			from = X_PROBED;
 		} else {
 			xf86DrvMsg(pScrn->scrnIndex, X_ERROR,
@@ -1082,6 +1090,7 @@ AlpPreInit(ScrnInfoPtr pScrn, int flags)
 
 	/* Load bpp-specific modules */
 	switch (pScrn->bitsPerPixel) {
+#ifdef HAVE_XF1BPP
 	case 1:  
 	    if (xf86LoadSubModule(pScrn, "xf1bpp") == NULL) {
 	        AlpFreeRec(pScrn);
@@ -1089,6 +1098,8 @@ AlpPreInit(ScrnInfoPtr pScrn, int flags)
 	    } 
 	    xf86LoaderReqSymbols("xf1bppScreenInit",NULL);
 	    break;
+#endif
+#ifdef HAVE_XF4BPP
 	case 4:  
 	    if (xf86LoadSubModule(pScrn, "xf4bpp") == NULL) {
 	        AlpFreeRec(pScrn);
@@ -1096,6 +1107,7 @@ AlpPreInit(ScrnInfoPtr pScrn, int flags)
 	    } 
 	    xf86LoaderReqSymbols("xf4bppScreenInit",NULL);	    
 	    break;
+#endif
 	case 8:
 	case 16:
 	case 24:
@@ -1575,18 +1587,22 @@ AlpScreenInit(int scrnIndex, ScreenPtr pScreen, int argc, char **argv)
 	 */
 
 	switch (pScrn->bitsPerPixel) {
+#ifdef HAVE_XF1BPP
 	case 1:
 	    ret = xf1bppScreenInit(pScreen, FbBase,
 				   width, height,
 				   pScrn->xDpi, pScrn->yDpi,
 				   displayWidth);
 	    break;
+#endif
+#ifdef HAVE_XF4BPP
 	case 4:
 	    ret = xf4bppScreenInit(pScreen, FbBase,
 				   width, height,
 				   pScrn->xDpi, pScrn->yDpi,
 				   displayWidth);
 	    break;
+#endif
 	case 8:
 	case 16:
 	case 24:
