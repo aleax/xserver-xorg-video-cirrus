@@ -1547,7 +1547,7 @@ LgAdjustFrame(int scrnIndex, int x, int y, int flags)
 		(PCI_CHIP_GD5465 == pCir->Chipset) ? 1 : (24==pScrn->bitsPerPixel?3:1);
 
 	/* Where's the pointer? */
-	miPointerPosition(&cursorX, &cursorY);
+	miPointerGetPosition(inputInfo.pointer, &cursorX, &cursorY);
 
 	/* Where's the middle of the screen?  We want to eventually know
 	   which side of the screen the pointer is on. */
