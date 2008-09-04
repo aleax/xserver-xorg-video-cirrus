@@ -1,3 +1,18 @@
+commit 5dfd5d1772e2119c6b54f4548ae359cc9483e8fc
+Author: Adam Jackson <ajax@redhat.com>
+Date:   Wed May 21 15:43:45 2008 -0400
+
+    cirrus 1.2.1
+
+commit e44db96ed07ff1425a1a465ab32fd2d53a81b10c
+Author: Adam Jackson <ajax@redhat.com>
+Date:   Mon Mar 24 14:54:13 2008 -0400
+
+    Bug #10715: Fix depth configuration for alpine chips.
+    
+    In particular, don't try to set up 24+32 on the chip that qemu emulates,
+    since it doesn't work, either in qemu or in hardware.
+
 commit e9d517d8bd7398aa9ca33ceb64db46d659f70707
 Author: Adam Jackson <ajax@redhat.com>
 Date:   Wed Mar 19 13:45:30 2008 -0400

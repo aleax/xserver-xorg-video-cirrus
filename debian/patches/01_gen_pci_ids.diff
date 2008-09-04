@@ -1,5 +1,7 @@
---- /dev/null
-+++ xserver-xorg-video-cirrus/src/cirrus.ids
+Index: xserver-xorg-video-cirrus/src/cirrus.ids
+===================================================================
+--- /dev/null	1970-01-01 00:00:00.000000000 +0000
++++ xserver-xorg-video-cirrus/src/cirrus.ids	2008-05-22 08:21:10.000000000 +0200
 @@ -0,0 +1,11 @@
 +101300A0
 +101300A4
@@ -12,8 +14,10 @@
 +101300D5
 +101300D6
 +10130038
---- xserver-xorg-video-cirrus.orig/src/Makefile.am
-+++ xserver-xorg-video-cirrus/src/Makefile.am
+Index: xserver-xorg-video-cirrus/src/Makefile.am
+===================================================================
+--- xserver-xorg-video-cirrus.orig/src/Makefile.am	2008-05-22 08:20:51.000000000 +0200
++++ xserver-xorg-video-cirrus/src/Makefile.am	2008-05-22 08:21:10.000000000 +0200
 @@ -57,3 +57,6 @@
           lg_i2c.c \
           lg_xaa.c \

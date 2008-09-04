@@ -528,6 +528,7 @@ AlpPreInit(ScrnInfoPtr pScrn, int flags)
 	vgaHWPtr hwp;
 	MessageType from, from1;
 	int i;
+	int depth_flags;
 	ClockRangePtr clockRanges;
 	char *s;
  	xf86Int10InfoPtr pInt = NULL;
@@ -598,12 +599,17 @@ AlpPreInit(ScrnInfoPtr pScrn, int flags)
     /* Set pScrn->monitor */
 	pScrn->monitor = pScrn->confScreen->monitor;
 
+	/* 32bpp only works on 5480 and 7548 */
+	depth_flags = Support24bppFb;
+	if (pCir->Chipset == PCI_CHIP_GD5480 || pCir->Chipset ==PCI_CHIP_GD7548)
+	    depth_flags |= Support32bppFb |
+			   SupportConvert32to24 |
+			   PreferConvert32to24;
 	/*
 	 * The first thing we should figure out is the depth, bpp, etc.
 	 * We support both 24bpp and 32bpp layouts, so indicate that.
 	 */
-	if (!xf86SetDepthBpp(pScrn, 0, 0, 24, Support24bppFb | Support32bppFb |
-				SupportConvert32to24 | PreferConvert32to24)) {
+	if (!xf86SetDepthBpp(pScrn, 0, 0, 24, depth_flags)) {
 		return FALSE;
 	} else {
 		/* Check that the returned depth is one we support */
