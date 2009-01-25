@@ -591,8 +591,8 @@ AlpPreInit(ScrnInfoPtr pScrn, int flags)
 	 * BIOSes tend to mess them up
 	 */
 
-	PCI_WRITE_LONG(pCir->PciInfo, 0x10, PCI_REGION_BASE(pCir->PciInfo, 0, REGION_MEM));
-	PCI_WRITE_LONG(pCir->PciInfo, 0x14, PCI_REGION_BASE(pCir->PciInfo, 1, REGION_MEM));
+	PCI_WRITE_LONG(pCir->PciInfo, PCI_REGION_BASE(pCir->PciInfo, 0, REGION_MEM), 0x10);
+	PCI_WRITE_LONG(pCir->PciInfo, PCI_REGION_BASE(pCir->PciInfo, 1, REGION_MEM), 0x14);
 	
     }
 
