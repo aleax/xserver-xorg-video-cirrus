@@ -6,7 +6,6 @@ Uploaders: David Nusinow <dnusinow@debian.org>, Brice Goglin <bgoglin@debian.org
 Build-Depends:
  debhelper (>= 5),
  pkg-config,
- quilt,
  xserver-xorg-dev (>= 2:1.5.99.901),
  x11proto-video-dev,
  x11proto-core-dev,

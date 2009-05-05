@@ -1,3 +1,11 @@
+xserver-xorg-video-cirrus (1:1.2.1-5) UNRELEASED; urgency=low
+
+  * Remove 01_gen_pci_ids.diff. The X server now uses an internal table to
+    pick a driver during autoconfig.
+    + Disable patch system and remove quilt from build-dep
+
+ -- David Nusinow <dnusinow@debian.org>  Mon, 04 May 2009 21:50:40 -0400
+
 xserver-xorg-video-cirrus (1:1.2.1-4) unstable; urgency=low
 
   * Upload to unstable.
