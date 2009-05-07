@@ -27,4 +27,5 @@ driver.
 .SH "SEE ALSO"
 __xservername__(1), __xconfigfile__(__filemansuffix__), Xserver(1), X(__miscmansuffix__)
 .SH AUTHORS
-Authors include: ...
+Authors include: Corin Anderson, Egbert Eich, Derek Fawcus, Koen Gadeyne,
+Harm Hanemaayer, David Monniaux, Itai Nahshon
