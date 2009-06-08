@@ -1,3 +1,79 @@
+commit 15b1632d4136d4d20e006626836fb1f73c5a61f7
+Author: Alan Coopersmith <alan.coopersmith@sun.com>
+Date:   Thu May 7 06:56:57 2009 -0700
+
+    Version 1.3.0
+    
+    Signed-off-by: Alan Coopersmith <alan.coopersmith@sun.com>
+
+commit b2dd1f8616e0863710abe1efd0d6444d749b6c49
+Author: Alan Coopersmith <alan.coopersmith@sun.com>
+Date:   Thu May 7 06:45:12 2009 -0700
+
+    Updates to COPYING, README, & cirrus.man
+    
+    Signed-off-by: Alan Coopersmith <alan.coopersmith@sun.com>
+
+commit 5db201643fc0e1554fb522db3a215f55938dd1e3
+Author: Alan Coopersmith <alan.coopersmith@sun.com>
+Date:   Thu May 7 06:43:12 2009 -0700
+
+    renamed:    {man,src}/.cvsignore -> {man,src}/.gitignore
+    
+    Signed-off-by: Alan Coopersmith <alan.coopersmith@sun.com>
+
+commit 8676a781c9fcbf03e61f9805c436d21555220e9a
+Author: Alan Coopersmith <alan.coopersmith@sun.com>
+Date:   Wed Apr 29 18:30:25 2009 -0700
+
+    Raise minimum xorg-server required to 1.4 for miGetPointerPosition
+    
+    Signed-off-by: Alan Coopersmith <alan.coopersmith@sun.com>
+
+commit 6e13b31347c298e72f0f4bcaf94b56172a48bd5c
+Author: Alan Coopersmith <alan.coopersmith@sun.com>
+Date:   Fri Apr 24 02:31:23 2009 -0700
+
+    Replace static ChangeLog with XORG_CHANGELOG, use XORG_CWARNFLAGS too
+    
+    Signed-off-by: Alan Coopersmith <alan.coopersmith@sun.com>
+
+commit 19b9d2335a89269b271583101d4fe377c5dfdddf
+Author: Alan Coopersmith <alan.coopersmith@sun.com>
+Date:   Fri Jan 30 20:38:04 2009 -0800
+
+    Add README with pointers to mailing list, bugzilla & git repos
+
+commit c5c3a60d085efdc32132f0a19de50b559dcf3827
+Author: Alan Coopersmith <alan.coopersmith@sun.com>
+Date:   Fri Jan 9 16:26:50 2009 -0800
+
+    Remove xorgconfig & xorgcfg from See Also list in man page
+
+commit d92459edcb8917d51435110f6b30a133d8ce7d52
+Author: Matthieu Herrb <matthieu.herrb@laas.fr>
+Date:   Tue Sep 16 23:48:07 2008 +0200
+
+    alpine: fix order of arguments of PCI_WRITE_LONG().
+
+commit 6dcbf42d6ddf0f8b55feb72008c4f79b18a1603a
+Author: Paulo Cesar Pereira de Andrade <pcpa@mandriva.com.br>
+Date:   Thu Jul 17 19:06:42 2008 -0300
+
+    Update to use miPointerGetPosition.
+    
+      miPointerPosition is deprecated.
+
+commit 8341f8b0298eef41ff9db582305e3b7006cdf27a
+Author: Paulo Cesar Pereira de Andrade <pcpa@mandriva.com.br>
+Date:   Mon Jul 28 19:09:16 2008 -0300
+
+    Export symbols used by different cirrus driver modules.
+    
+    Symbols are used by cirrus_drv.so, cirrus_alpine.so, and cirrus_laguna.so.
+    
+    These must have public visibility if compiling with hidden symbols.
+
 commit 5dfd5d1772e2119c6b54f4548ae359cc9483e8fc
 Author: Adam Jackson <ajax@redhat.com>
 Date:   Wed May 21 15:43:45 2008 -0400

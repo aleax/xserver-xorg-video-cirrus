@@ -93,7 +93,7 @@ SymTabRec CIRChipsets[] = {
 };
 
 /* List of PCI chipset names */
-PciChipsets CIRPciChipsets[] = {
+_X_EXPORT PciChipsets CIRPciChipsets[] = {
 	{ PCI_CHIP_GD5430,	PCI_CHIP_GD5430,	RES_SHARED_VGA },
 	{ PCI_CHIP_GD5434_4,PCI_CHIP_GD5434_4,	RES_SHARED_VGA },
 	{ PCI_CHIP_GD5434_8,PCI_CHIP_GD5434_8,	RES_SHARED_VGA },
@@ -320,7 +320,7 @@ CIRProbe(DriverPtr drv, int flags)
  * Map the framebuffer and MMIO memory.
  */
 
-Bool
+_X_EXPORT Bool
 CirMapMem(CirPtr pCir, int scrnIndex)
 {
 	int mmioFlags;
@@ -410,7 +410,7 @@ CirMapMem(CirPtr pCir, int scrnIndex)
  * Unmap the framebuffer and MMIO memory.
  */
 
-Bool
+_X_EXPORT Bool
 CirUnmapMem(CirPtr pCir, int scrnIndex)
 {
 #ifdef CIR_DEBUG
@@ -438,7 +438,7 @@ CirUnmapMem(CirPtr pCir, int scrnIndex)
 	return TRUE;
 }
 
-void
+_X_EXPORT void
 cirProbeDDC(ScrnInfoPtr pScrn, int index)
 {
     vbeInfoPtr pVbe;
