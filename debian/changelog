@@ -1,4 +1,4 @@
-xserver-xorg-video-cirrus (1:1.3.0-1) UNRELEASED; urgency=low
+xserver-xorg-video-cirrus (1:1.3.0-1) unstable; urgency=low
 
   [ David Nusinow ]
   * Remove 01_gen_pci_ids.diff. The X server now uses an internal table to
@@ -9,7 +9,7 @@ xserver-xorg-video-cirrus (1:1.3.0-1) UNRELEASED; urgency=low
   * New upstream release.
   * Add README.source, bump Standards-Version to 3.8.1.
 
- -- David Nusinow <dnusinow@debian.org>  Mon, 04 May 2009 21:50:40 -0400
+ -- Julien Cristau <jcristau@debian.org>  Mon, 08 Jun 2009 18:00:08 +0200
 
 xserver-xorg-video-cirrus (1:1.2.1-4) unstable; urgency=low
 
