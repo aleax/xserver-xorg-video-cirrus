@@ -45,6 +45,9 @@
 /* All drivers initialising the SW cursor need this */
 #include "mipointer.h"
 
+/* need this for inputInfo */
+#include "inputstr.h"
+
 /* All drivers implementing backing store need this */
 #include "mibstore.h"
 
