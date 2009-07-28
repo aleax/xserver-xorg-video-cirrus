@@ -21,8 +21,9 @@
 #include "xf86.h"
 #include "xf86_OSproc.h"
 
+#ifndef XSERVER_LIBPCIACCESS
 #include "xf86Resources.h"
-
+#endif
 /* All drivers need this */
 
 /* Drivers for PCI hardware need this */
