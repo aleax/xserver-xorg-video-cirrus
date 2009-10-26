@@ -21,9 +21,7 @@
 AUTOMAKE_OPTIONS = foreign
 SUBDIRS = src man
 
-EXTRA_DIST = README.multihead ChangeLog
-
-MAINTAINERCLEANFILES=ChangeLog
+EXTRA_DIST = README.multihead
 
 .PHONY: ChangeLog
 
