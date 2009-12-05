@@ -1,3 +1,21 @@
+commit 5cbe6d11d11070da698a6a3ddd5d95d1cff34da1
+Author: Dave Airlie <airlied@redhat.com>
+Date:   Thu Jul 30 12:04:26 2009 +1000
+
+    cirrus: bump for release 1.3.2
+
+commit 4ecaa548a996475fbb4c6403698b2ecaf35e9d6b
+Author: Dave Airlie <airlied@redhat.com>
+Date:   Tue Jul 28 15:22:40 2009 +1000
+
+    cirrus: change to using ABI version check
+
+commit 2765aba56fe66038ab7de554474b8d30995f3ef0
+Author: Dave Airlie <airlied@redhat.com>
+Date:   Tue Jul 28 13:32:29 2009 +1000
+
+    cirrus: update for resources/RAC API removal
+
 commit ecdf94e86d44bdbeff1bb944fb372da92d2fa907
 Author: Adam Jackson <ajax@redhat.com>
 Date:   Thu Jul 2 10:28:20 2009 -0400
