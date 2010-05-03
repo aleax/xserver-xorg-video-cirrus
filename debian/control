@@ -6,7 +6,7 @@ Uploaders: David Nusinow <dnusinow@debian.org>, Brice Goglin <bgoglin@debian.org
 Build-Depends:
  debhelper (>= 5),
  pkg-config,
- xserver-xorg-dev (>= 2:1.7),
+ xserver-xorg-dev (>= 2:1.7.6.901),
  x11proto-video-dev,
  x11proto-core-dev,
  x11proto-fonts-dev,
@@ -23,7 +23,7 @@ Vcs-Browser: http://git.debian.org/?p=pkg-xorg/driver/xserver-xorg-video-cirrus.
 
 Package: xserver-xorg-video-cirrus
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, ${xserver:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${xviddriver:Depends}
 Provides: ${xviddriver:Provides}
 Replaces: xserver-xorg (<< 6.8.2-35), xserver-xorg-driver-cirrus
 Conflicts: xserver-xorg-driver-cirrus
