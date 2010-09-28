@@ -13,7 +13,6 @@
  *	David Dawes, Andrew E. Mileski, Leonard N. Zubkoff,
  *	Guy DESBIEF, Itai Nahshon.
  */
-/* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/cirrus/lg_driver.c,v 1.49 2003/11/03 05:11:09 tsi Exp $ */
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
