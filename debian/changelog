@@ -1,8 +1,9 @@
 xserver-xorg-video-cirrus (1:1.3.2-3) UNRELEASED; urgency=low
 
   * Add 10-qemu.diff, stolen from Fedora, making the driver default to
-    1024x768 instead of 800x600. Thanks to Guido Günther for the pointer
-    to that pretty ugly hack (Closes: #586693).
+    1024x768 instead of 800x600 for the device simulated by QEMU. Thanks
+    to Guido Günther for the pointer to that pretty ugly yet useful hack
+    (Closes: #586693).
   * Add a dependency from configure to $(STAMP_DIR)/patch to get patches
     applied.
   * Add quilt build-dep accordingly.
