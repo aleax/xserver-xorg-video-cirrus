@@ -48,7 +48,7 @@ build-stamp: configure
 	cd build && $(MAKE)
 	>$@
 
-clean:
+clean: xsfclean
 	dh_testdir
 	dh_testroot
 	rm -f build-stamp
