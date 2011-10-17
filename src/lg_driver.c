@@ -258,7 +258,7 @@ LgFreeRec(ScrnInfoPtr pScrn)
 {
 	if (pScrn->driverPrivate == NULL)
 		return;
-	xfree(pScrn->driverPrivate);
+	free(pScrn->driverPrivate);
 	pScrn->driverPrivate = NULL;
 }
 
@@ -453,7 +453,7 @@ LgPreInit(ScrnInfoPtr pScrn, int flags)
 	xf86CollectOptions(pScrn, NULL);
 
 	/* Process the options */
-	if (!(pCir->Options = xalloc(sizeof(LgOptions))))
+	if (!(pCir->Options = malloc(sizeof(LgOptions))))
 		return FALSE;
 	memcpy(pCir->Options, LgOptions, sizeof(LgOptions));
 	xf86ProcessOptions(pScrn->scrnIndex, pScrn->options, pCir->Options);
@@ -1313,7 +1313,7 @@ LgScreenInit(int scrnIndex, ScreenPtr pScreen, int argc, char **argv)
 	
 	if(pCir->shadowFB) {
 	    pCir->ShadowPitch = BitmapBytePad(pScrn->bitsPerPixel * width);
-	    pCir->ShadowPtr = xalloc(pCir->ShadowPitch * height);
+	    pCir->ShadowPtr = malloc(pCir->ShadowPitch * height);
 	    displayWidth = pCir->ShadowPitch / (pScrn->bitsPerPixel >> 3);
 	    FbBase = pCir->ShadowPtr;
 	} else {
@@ -1616,7 +1616,7 @@ LgCloseScreen(int scrnIndex, ScreenPtr pScreen)
 		xf86DestroyCursorInfoRec(pCir->CursorInfoRec);
 	pCir->CursorInfoRec = NULL;
 	if (pCir->DGAModes)
-		xfree(pCir->DGAModes);
+		free(pCir->DGAModes);
 	pCir->DGAnumModes = 0;
 	pCir->DGAModes = NULL;
 

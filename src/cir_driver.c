@@ -236,7 +236,7 @@ CIRProbe(DriverPtr drv, int flags)
 				    CIRChipsets, CIRPciChipsets, devSections,
  				    numDevSections, drv, &usedChips);
     /* Free it since we don't need that list after this */
-    xfree(devSections);
+    free(devSections);
     if (numUsed <= 0)
  	return FALSE;
     if (flags & PROBE_DETECT)
@@ -278,7 +278,7 @@ CIRProbe(DriverPtr drv, int flags)
  	    pScrn->Probe	 = NULL;
  	}
     }
-    xfree(usedChips);
+    free(usedChips);
      
     return foundScreen;
 }

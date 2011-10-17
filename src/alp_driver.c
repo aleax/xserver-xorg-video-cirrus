@@ -246,7 +246,7 @@ AlpFreeRec(ScrnInfoPtr pScrn)
 {
 	if (pScrn->driverPrivate == NULL)
 		return;
-	xfree(pScrn->driverPrivate);
+	free(pScrn->driverPrivate);
 	pScrn->driverPrivate = NULL;
 }
 
@@ -485,7 +485,7 @@ AlpPreInit(ScrnInfoPtr pScrn, int flags)
 	/* Get the entity, and make sure it is PCI. */
 	pCir->pEnt = xf86GetEntityInfo(pScrn->entityList[0]);
 	if (pCir->pEnt->location.type != BUS_PCI) {
-		xfree(pCir->pEnt);
+		free(pCir->pEnt);
 		return FALSE;
 	}
 
@@ -572,7 +572,7 @@ AlpPreInit(ScrnInfoPtr pScrn, int flags)
 	xf86CollectOptions(pScrn, NULL);
 
 	/* Process the options */
-	if (!(pCir->Options = xalloc(sizeof(CirOptions))))
+	if (!(pCir->Options = malloc(sizeof(CirOptions))))
 		return FALSE;
 	memcpy(pCir->Options, CirOptions, sizeof(CirOptions));
 	xf86ProcessOptions(pScrn->scrnIndex, pScrn->options, pCir->Options);
@@ -1487,7 +1487,7 @@ AlpScreenInit(int scrnIndex, ScreenPtr pScreen, int argc, char **argv)
 	
 	if(pCir->shadowFB) {
 	    pCir->ShadowPitch = BitmapBytePad(pScrn->bitsPerPixel * width);
-	    pCir->ShadowPtr = xalloc(pCir->ShadowPitch * height);
+	    pCir->ShadowPtr = malloc(pCir->ShadowPitch * height);
 	    displayWidth = pCir->ShadowPitch / (pScrn->bitsPerPixel >> 3);
 	    FbBase = pCir->ShadowPtr;
 	} else {
@@ -1811,7 +1811,7 @@ AlpCloseScreen(int scrnIndex, ScreenPtr pScreen)
 		xf86DestroyCursorInfoRec(pCir->CursorInfoRec);
 	pCir->CursorInfoRec = NULL;
 	if (pCir->DGAModes)
-		xfree(pCir->DGAModes);
+		free(pCir->DGAModes);
 	pCir->DGAnumModes = 0;
 	pCir->DGAModes = NULL;
 
