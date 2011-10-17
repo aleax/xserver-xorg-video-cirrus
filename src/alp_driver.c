@@ -861,10 +861,10 @@ AlpPreInit(ScrnInfoPtr pScrn, int flags)
 		case PCI_CHIP_GD5430:
 		case PCI_CHIP_GD5434_4:
 		case PCI_CHIP_GD5434_8:
-		case PCI_CHIP_GD5436:
 	/*	case PCI_CHIP_GD5440: */
 			p = gd5430_MaxClocks;
 			break;
+		case PCI_CHIP_GD5436:
 		case PCI_CHIP_GD5446:
 			p = gd5446_MaxClocks;
 			break;
