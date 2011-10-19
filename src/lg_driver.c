@@ -372,7 +372,12 @@ LgPreInit(ScrnInfoPtr pScrn, int flags)
 
 	pCir = CIRPTR(pScrn);
 	pCir->pScrn = pScrn;
+
+#if GET_ABI_MAJOR(ABI_VIDEODRV_VERSION) < 12
 	pCir->PIOReg = hwp->PIOOffset + 0x3CE;
+#else
+	pCir->PIOReg = 0x3CE;
+#endif
 
 	/* Get the entity, and make sure it is PCI. */
 	pCir->pEnt = xf86GetEntityInfo(pScrn->entityList[0]);

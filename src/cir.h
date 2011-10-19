@@ -21,7 +21,7 @@ typedef struct {
 	CARD32			properties;
 	pciVideoPtr		PciInfo;
 	PCITAG			PciTag;
-	IOADDRESS		PIOReg;
+	unsigned long		PIOReg;
     union {
 	struct lgRec		*lg;
 	struct alpRec		*alp;
