@@ -405,6 +405,8 @@ GetAccelPitchValues(ScrnInfoPtr pScrn)
 {
 	int *linePitches = NULL;
 	int i, n = 0;
+	int max_pitch;
+
 	CirPtr pCir = CIRPTR(pScrn);
 
 	/* XXX ajv - 512, 576, and 1536 may not be supported
@@ -421,8 +423,21 @@ GetAccelPitchValues(ScrnInfoPtr pScrn)
 							1280, 1536, 1600, 1920, 2048, 0 };
 #endif
 
+	switch (pCir->Chipset) {
+	case PCI_CHIP_GD5436:
+	case PCI_CHIP_GD5446:
+		max_pitch = 0x1ff << 3;
+		break;
+
+	default:
+		/* FIXME max_pitch for other chipsets? */
+		max_pitch = (pScrn->bitsPerPixel / 8) * 2048;
+		break;
+	}
+
 	for (i = 0; accelWidths[i] != 0; i++) {
-		if (accelWidths[i] % pCir->Rounding == 0) {
+		if ((accelWidths[i] % pCir->Rounding == 0)
+		 && ((accelWidths[i] * pScrn->bitsPerPixel / 8) <= max_pitch)) {
 			n++;
 			linePitches = xnfrealloc(linePitches, n * sizeof(int));
 			linePitches[n - 1] = accelWidths[i];
