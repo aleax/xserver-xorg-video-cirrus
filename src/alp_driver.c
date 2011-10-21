@@ -27,6 +27,10 @@
 /* Drivers for PCI hardware need this */
 #include "xf86PciInfo.h"
 
+#ifndef PCI_CHIP_GD7556  /*  for old xf86PciInfo.h  */
+#define PCI_CHIP_GD7556            0x004C
+#endif
+
 /* Drivers that need to access the PCI config space directly need this */
 #include "xf86Pci.h"
 
@@ -117,6 +121,9 @@ static void AlpOffscreenAccelInit(ScrnInfoPtr pScrn);
 static void	AlpDisplayPowerManagementSet(ScrnInfoPtr pScrn,
 											int PowerManagementMode, int flags);
 
+static void PC98CIRRUS755xEnable(ScrnInfoPtr pScrn);
+static void PC98CIRRUS755xDisable(ScrnInfoPtr pScrn);
+
 /*
  * This is intentionally screen-independent.  It indicates the binding
  * choice made in the first PreInit.
@@ -151,6 +158,8 @@ static int gd5430_MaxClocks[] = {  85500,  85500,  50000,  28500,      0 };
 static int gd5446_MaxClocks[] = { 135100, 135100,  85500,  85500,      0 };
 static int gd5480_MaxClocks[] = { 135100, 200000, 200000, 135100, 135100 };
 static int gd7548_MaxClocks[] = {  80100,  80100,  80100,  80100,  80100 };
+static int gd7555_MaxClocks[] = {  80100,  80100,  80100,  80100,  80100 };
+static int gd7556_MaxClocks[] = {  80100,  80100,  80100,  80100,  80100 };
 
 #ifdef XFree86LOADER
 
@@ -383,6 +392,11 @@ AlpCountRam(ScrnInfoPtr pScrn)
 			break;
 	}
 	break;
+
+    case PCI_CHIP_GD7555:
+    case PCI_CHIP_GD7556:
+	videoram = 2048;   /*  for PC-9821 La13 etc.  */
+	break;
     }
 
     /* UNMap the Alp memory and MMIO areas */
@@ -516,7 +530,7 @@ AlpPreInit(ScrnInfoPtr pScrn, int flags)
 			      PCI_DEV_DEV(pCir->PciInfo),
 			      PCI_DEV_FUNC(pCir->PciInfo));
 
-    if (xf86LoadSubModule(pScrn, "int10")) {
+    if (!xf86IsPc98() && xf86LoadSubModule(pScrn, "int10")) {
 	xf86DrvMsg(pScrn->scrnIndex,X_INFO,"initializing int10\n");
 	pInt = xf86InitInt10(pCir->pEnt->index);
 	xf86FreeInt10(pInt);
@@ -607,6 +621,16 @@ AlpPreInit(ScrnInfoPtr pScrn, int flags)
 
 	from = X_DEFAULT;
 	pCir->HWCursor = FALSE;
+
+	switch (pCir->Chipset) {
+	case PCI_CHIP_GD7555:
+	case PCI_CHIP_GD7556:
+	  pCir->HWCursor = TRUE;
+	  break;
+	default:
+	  break;
+	}
+
 	if (xf86GetOptValBool(pCir->Options, OPTION_HW_CURSOR, &pCir->HWCursor))
 		from = X_CONFIG;
 
@@ -893,6 +917,12 @@ AlpPreInit(ScrnInfoPtr pScrn, int flags)
 			break;
 		case PCI_CHIP_GD7548:
 		        p = gd7548_MaxClocks;
+                        break;
+		case PCI_CHIP_GD7555:
+		        p = gd7555_MaxClocks;
+                        break;
+		case PCI_CHIP_GD7556:
+		        p = gd7556_MaxClocks;
                         break;
 		}
 		if (!p)
@@ -1378,6 +1408,9 @@ AlpModeInit(ScrnInfoPtr pScrn, DisplayModePtr mode)
 
 	vgaHWProtect(pScrn, FALSE);
 
+	if (xf86IsPc98())
+		PC98CIRRUS755xEnable(pScrn);
+
 	return TRUE;
 }
 
@@ -1800,6 +1833,9 @@ AlpLeaveVT(int scrnIndex, int flags)
 
 	AlpRestore(pScrn);
 	vgaHWLock(hwp);
+
+	if (xf86IsPc98())
+		PC98CIRRUS755xDisable(pScrn);
 }
 
 
@@ -1836,6 +1872,9 @@ AlpCloseScreen(int scrnIndex, ScreenPtr pScreen)
 	pCir->DGAModes = NULL;
 
 	pScrn->vtSema = FALSE;
+
+	if (xf86IsPc98())
+		PC98CIRRUS755xDisable(pScrn);
 
 	pScreen->CloseScreen = pCir->CloseScreen;
 	return (*pScreen->CloseScreen)(scrnIndex, pScreen);
@@ -2099,3 +2138,52 @@ AlpOffscreenAccelInit(ScrnInfoPtr pScrn)
 		   box.y2 - pScrn->virtualY);
     }
 }
+
+static void
+PC98CIRRUS755xEnable(ScrnInfoPtr pScrn)  /*  enter_aile()  */
+{
+   unsigned int  index,data;
+   vgaHWPtr hwp = VGAHWPTR(pScrn);
+
+   outb(0xfac, 0x02);
+
+   outb(0x68, 0x0e);
+   outb(0x6a, 0x07);
+   outb(0x6a, 0x8f);
+   outb(0x6a, 0x06);
+
+   outw(VGA_SEQ_INDEX, 0x1206);         /*  unlock cirrus special  */
+
+   index = hwp->IOBase + VGA_CRTC_INDEX_OFFSET;
+   data  = hwp->IOBase + VGA_CRTC_DATA_OFFSET;
+   outb(index, 0x3c);
+   outb(data,  inb(data) & 0xef);
+   outb(index, 0x1a);
+   outb(data,  inb(data) & 0xf3);
+}
+
+static void
+PC98CIRRUS755xDisable(ScrnInfoPtr pScrn)  /*  leave_aile()  */
+{
+   unsigned int  index,data;
+   vgaHWPtr hwp = VGAHWPTR(pScrn);
+
+   outw(VGA_SEQ_INDEX, 0x1206);         /*  unlock cirrus special  */
+
+   index = hwp->IOBase + VGA_CRTC_INDEX_OFFSET;
+   data  = hwp->IOBase + VGA_CRTC_DATA_OFFSET;
+   outb(index, 0x3c);
+   outb(data,  0x71);
+   outb(index, 0x1a);
+   outb(data,  inb(data) | 0x0c);
+
+   outb(0xfac,0x00);
+
+   outb(0x68, 0x0f);
+   outb(0x6a, 0x07);
+   outb(0x6a, 0x8e);
+   outb(0x6a, 0x21);
+   outb(0x6a, 0x69);
+   outb(0x6a, 0x06);
+}
+

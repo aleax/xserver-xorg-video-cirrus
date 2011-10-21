@@ -27,6 +27,10 @@
 /* Drivers for PCI hardware need this */
 #include "xf86PciInfo.h"
 
+#ifndef PCI_CHIP_GD7556  /*  for old xf86PciInfo.h  */
+#define PCI_CHIP_GD7556            0x004C
+#endif
+
 /* Drivers that need to access the PCI config space directly need this */
 #include "xf86Pci.h"
 
@@ -88,6 +92,8 @@ SymTabRec CIRChipsets[] = {
 	{ PCI_CHIP_GD5464BD,	"CL-GD5464BD" },
 	{ PCI_CHIP_GD5465,		"CL-GD5465" },
 	{ PCI_CHIP_GD7548,              "CL-GD7548" },
+	{ PCI_CHIP_GD7555,              "CL-GD7555" },
+	{ PCI_CHIP_GD7556,              "CL-GD7556" },
 	{-1,					NULL }
 };
 
@@ -105,6 +111,8 @@ _X_EXPORT PciChipsets CIRPciChipsets[] = {
 	{ PCI_CHIP_GD5464BD,PCI_CHIP_GD5464BD,	RES_SHARED_VGA },
 	{ PCI_CHIP_GD5465,	PCI_CHIP_GD5465,	RES_SHARED_VGA },
 	{ PCI_CHIP_GD7548,	PCI_CHIP_GD7548,	RES_SHARED_VGA },
+	{ PCI_CHIP_GD7555,	PCI_CHIP_GD7555,	RES_SHARED_VGA },
+	{ PCI_CHIP_GD7556,	PCI_CHIP_GD7556,	RES_SHARED_VGA },
 	{ -1,				-1,					RES_UNDEFINED}
 };
 
