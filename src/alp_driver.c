@@ -121,8 +121,10 @@ static void AlpOffscreenAccelInit(ScrnInfoPtr pScrn);
 static void	AlpDisplayPowerManagementSet(ScrnInfoPtr pScrn,
 											int PowerManagementMode, int flags);
 
+#if GET_ABI_MAJOR(ABI_VIDEODRV_VERSION) < 12
 static void PC98CIRRUS755xEnable(ScrnInfoPtr pScrn);
 static void PC98CIRRUS755xDisable(ScrnInfoPtr pScrn);
+#endif
 
 /*
  * This is intentionally screen-independent.  It indicates the binding
@@ -530,6 +532,7 @@ AlpPreInit(ScrnInfoPtr pScrn, int flags)
 			      PCI_DEV_DEV(pCir->PciInfo),
 			      PCI_DEV_FUNC(pCir->PciInfo));
 
+#if GET_ABI_MAJOR(ABI_VIDEODRV_VERSION) < 12
     if (!xf86IsPc98() && xf86LoadSubModule(pScrn, "int10")) {
 	xf86DrvMsg(pScrn->scrnIndex,X_INFO,"initializing int10\n");
 	pInt = xf86InitInt10(pCir->pEnt->index);
@@ -541,8 +544,8 @@ AlpPreInit(ScrnInfoPtr pScrn, int flags)
 
 	PCI_WRITE_LONG(pCir->PciInfo, PCI_REGION_BASE(pCir->PciInfo, 0, REGION_MEM), 0x10);
 	PCI_WRITE_LONG(pCir->PciInfo, PCI_REGION_BASE(pCir->PciInfo, 1, REGION_MEM), 0x14);
-	
     }
+#endif
 
     /* Set pScrn->monitor */
 	pScrn->monitor = pScrn->confScreen->monitor;
@@ -1408,8 +1411,10 @@ AlpModeInit(ScrnInfoPtr pScrn, DisplayModePtr mode)
 
 	vgaHWProtect(pScrn, FALSE);
 
+#if GET_ABI_MAJOR(ABI_VIDEODRV_VERSION) < 12
 	if (xf86IsPc98())
 		PC98CIRRUS755xEnable(pScrn);
+#endif
 
 	return TRUE;
 }
@@ -1834,8 +1839,10 @@ AlpLeaveVT(int scrnIndex, int flags)
 	AlpRestore(pScrn);
 	vgaHWLock(hwp);
 
+#if GET_ABI_MAJOR(ABI_VIDEODRV_VERSION) < 12
 	if (xf86IsPc98())
 		PC98CIRRUS755xDisable(pScrn);
+#endif
 }
 
 
@@ -1873,8 +1880,10 @@ AlpCloseScreen(int scrnIndex, ScreenPtr pScreen)
 
 	pScrn->vtSema = FALSE;
 
+#if GET_ABI_MAJOR(ABI_VIDEODRV_VERSION) < 12
 	if (xf86IsPc98())
 		PC98CIRRUS755xDisable(pScrn);
+#endif
 
 	pScreen->CloseScreen = pCir->CloseScreen;
 	return (*pScreen->CloseScreen)(scrnIndex, pScreen);
@@ -2139,6 +2148,7 @@ AlpOffscreenAccelInit(ScrnInfoPtr pScrn)
     }
 }
 
+#if GET_ABI_MAJOR(ABI_VIDEODRV_VERSION) < 12
 static void
 PC98CIRRUS755xEnable(ScrnInfoPtr pScrn)  /*  enter_aile()  */
 {
@@ -2186,4 +2196,4 @@ PC98CIRRUS755xDisable(ScrnInfoPtr pScrn)  /*  leave_aile()  */
    outb(0x6a, 0x69);
    outb(0x6a, 0x06);
 }
-
+#endif
