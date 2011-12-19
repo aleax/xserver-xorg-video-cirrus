@@ -503,6 +503,7 @@ AlpPreInit(ScrnInfoPtr pScrn, int flags)
 	if (!vgaHWGetHWRec(pScrn))
 		return FALSE;
 	hwp = VGAHWPTR(pScrn);
+	vgaHWSetStdFuncs(hwp);
 	vgaHWGetIOBase(hwp);
 
 	/* Allocate the AlpRec driverPrivate */

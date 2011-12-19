@@ -364,6 +364,7 @@ LgPreInit(ScrnInfoPtr pScrn, int flags)
 		return FALSE;
 
 	hwp = VGAHWPTR(pScrn);
+	vgaHWSetStdFuncs(hwp);
 	vgaHWGetIOBase(hwp);
 
 	/* Allocate the LgRec driverPrivate */
