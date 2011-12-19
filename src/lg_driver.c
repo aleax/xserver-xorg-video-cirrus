@@ -800,8 +800,10 @@ LgPreInit(ScrnInfoPtr pScrn, int flags)
 	/* Load XAA if needed */
 	if (!pCir->NoAccel) {
 		if (!xf86LoadSubModule(pScrn, "xaa")) {
-			LgFreeRec(pScrn);
-			return FALSE;
+			xf86DrvMsg(pScrn->scrnInfo, X_INFO,
+				   "Falling back to shadowfb\n");
+			pCir->NoAccel = TRUE;
+			pCir->shadowFB = TRUE;
 		}
 	}
 

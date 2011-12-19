@@ -1093,8 +1093,10 @@ AlpPreInit(ScrnInfoPtr pScrn, int flags)
 	/* Load XAA if needed */
 	if (!pCir->NoAccel) {
 		if (!xf86LoadSubModule(pScrn, "xaa")) {
-			AlpFreeRec(pScrn);
-			return FALSE;
+			xf86DrvMsg(pScrn->scrnIndex, X_INFO,
+				   "Falling back to shadowfb\n");
+			pCir->NoAccel = TRUE;
+			pCir->shadowFB = TRUE;
 		}
 	}
 
