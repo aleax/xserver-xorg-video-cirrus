@@ -534,7 +534,10 @@ AlpPreInit(ScrnInfoPtr pScrn, int flags)
 			      PCI_DEV_FUNC(pCir->PciInfo));
 
 #if GET_ABI_MAJOR(ABI_VIDEODRV_VERSION) < 12
-    if (!xf86IsPc98() && xf86LoadSubModule(pScrn, "int10")) {
+    if (!xf86IsPc98())
+#endif
+    if (xf86LoadSubModule(pScrn, "int10"))
+    {
 	xf86DrvMsg(pScrn->scrnIndex,X_INFO,"initializing int10\n");
 	pInt = xf86InitInt10(pCir->pEnt->index);
 	xf86FreeInt10(pInt);
@@ -546,7 +549,6 @@ AlpPreInit(ScrnInfoPtr pScrn, int flags)
 	PCI_WRITE_LONG(pCir->PciInfo, PCI_REGION_BASE(pCir->PciInfo, 0, REGION_MEM), 0x10);
 	PCI_WRITE_LONG(pCir->PciInfo, PCI_REGION_BASE(pCir->PciInfo, 1, REGION_MEM), 0x14);
     }
-#endif
 
     /* Set pScrn->monitor */
 	pScrn->monitor = pScrn->confScreen->monitor;
