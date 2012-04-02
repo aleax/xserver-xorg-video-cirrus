@@ -2,6 +2,8 @@ xserver-xorg-video-cirrus (1:1.4.0-1) UNRELEASED; urgency=low
 
   * New upstream release:
     - Add support for Xserver 1.12.
+  * Drop patch (merged upstream):
+    - 20-faumachine-maxpitch.diff
 
  -- Cyril Brulebois <kibi@debian.org>  Mon, 02 Apr 2012 02:02:33 +0000
 
