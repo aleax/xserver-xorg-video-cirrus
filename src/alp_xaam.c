@@ -222,7 +222,7 @@ AlpAccelEngineInit(ScrnInfoPtr pScrn)
 Bool
 AlpXAAInitMMIO(ScreenPtr pScreen)
 {
-	ScrnInfoPtr pScrn = xf86Screens[pScreen->myNum];
+	ScrnInfoPtr pScrn = xf86ScreenToScrn(pScreen);
 	CirPtr pCir = CIRPTR(pScrn);
 	XAAInfoRecPtr XAAPtr;
 	

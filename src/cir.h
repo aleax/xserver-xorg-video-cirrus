@@ -9,6 +9,7 @@
 #include <string.h>
 #include <stdlib.h>
 
+#include "compat-api.h"
 #include "cir_pcirename.h"
 
 /* Card-specific driver information */
@@ -59,7 +60,7 @@ typedef struct {
 	int			rotate;
 	int			ShadowPitch;
 	unsigned char *		ShadowPtr;
-	void			(*PointerMoved)(int index, int x, int y);
+	void			(*PointerMoved)(SCRN_ARG_TYPE arg, int x, int y);
 	int			pitch;
 
 	unsigned char **	ScanlineColorExpandBuffers;
@@ -85,7 +86,7 @@ extern void cirProbeDDC(ScrnInfoPtr pScrn, int index);
 extern Bool CirDGAInit(ScreenPtr pScreen);
 
 /* in cir_shadow.c */
-void cirPointerMoved(int index, int x, int y);
+void cirPointerMoved(SCRN_ARG_TYPE arg, int x, int y);
 void cirRefreshArea(ScrnInfoPtr pScrn, int num, BoxPtr pbox);
 void cirRefreshArea8(ScrnInfoPtr pScrn, int num, BoxPtr pbox);
 void cirRefreshArea16(ScrnInfoPtr pScrn, int num, BoxPtr pbox);

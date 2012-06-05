@@ -588,7 +588,7 @@ AlpAccelEngineInit(ScrnInfoPtr pScrn)
 Bool
 AlpXAAInit(ScreenPtr pScreen)
 {
-    ScrnInfoPtr pScrn = xf86Screens[pScreen->myNum];
+    ScrnInfoPtr pScrn = xf86ScreenToScrn(pScreen);
     CirPtr pCir = CIRPTR(pScrn);
     AlpPtr pAlp = ALPPTR(pCir);
     XAAInfoRecPtr XAAPtr;

@@ -78,20 +78,20 @@
 
 /* Mandatory functions */
 Bool LgPreInit(ScrnInfoPtr pScrn, int flags);
-Bool LgScreenInit(int Index, ScreenPtr pScreen, int argc, char **argv);
-Bool LgEnterVT(int scrnIndex, int flags);
-void LgLeaveVT(int scrnIndex, int flags);
-static Bool	LgCloseScreen(int scrnIndex, ScreenPtr pScreen);
+Bool LgScreenInit(SCREEN_INIT_ARGS_DECL);
+Bool LgEnterVT(VT_FUNC_ARGS_DECL);
+void LgLeaveVT(VT_FUNC_ARGS_DECL);
+static Bool	LgCloseScreen(CLOSE_SCREEN_ARGS_DECL);
 static Bool	LgSaveScreen(ScreenPtr pScreen, Bool mode);
 
 /* Required if the driver supports mode switching */
-Bool LgSwitchMode(int scrnIndex, DisplayModePtr mode, int flags);
+Bool LgSwitchMode(SWITCH_MODE_ARGS_DECL);
 /* Required if the driver supports moving the viewport */
-void LgAdjustFrame(int scrnIndex, int x, int y, int flags);
+void LgAdjustFrame(ADJUST_FRAME_ARGS_DECL);
 
 /* Optional functions */
-void LgFreeScreen(int scrnIndex, int flags);
-ModeStatus LgValidMode(int scrnIndex, DisplayModePtr mode,
+void LgFreeScreen(FREE_SCREEN_ARGS_DECL);
+ModeStatus LgValidMode(SCRN_ARG_TYPE arg, DisplayModePtr mode,
 		       Bool verbose, int flags);
 
 /* Internally used functions */
@@ -1232,10 +1232,10 @@ LgRestore(ScrnInfoPtr pScrn)
 /* This gets called at the start of each server generation */
 
 Bool
-LgScreenInit(int scrnIndex, ScreenPtr pScreen, int argc, char **argv)
+LgScreenInit(SCREEN_INIT_ARGS_DECL)
 {
 	/* The vgaHW references will disappear one day */
-	ScrnInfoPtr pScrn;
+	ScrnInfoPtr pScrn = xf86ScreenToScrn(pScreen);
 	vgaHWPtr hwp;
 	CirPtr pCir;
 	int i, ret;
@@ -1246,11 +1246,6 @@ LgScreenInit(int scrnIndex, ScreenPtr pScreen, int argc, char **argv)
 #ifdef LG_DEBUG
 	ErrorF("LgScreenInit\n");
 #endif
-
-	/*
-	 * First get the ScrnInfoRec
-	 */
-	pScrn = xf86Screens[pScreen->myNum];
 
 	hwp = VGAHWPTR(pScrn);
 
@@ -1281,7 +1276,7 @@ LgScreenInit(int scrnIndex, ScreenPtr pScreen, int argc, char **argv)
 	LgSaveScreen(pScreen, SCREEN_SAVER_ON);
 
 	/* Set the viewport */
-	LgAdjustFrame(scrnIndex, pScrn->frameX0, pScrn->frameY0, 0);
+	LgAdjustFrame(ADJUST_FRAME_ARGS(pScrn, pScrn->frameX0, pScrn->frameY0));
 
 	/*
 	 * The next step is to setup the screen's visuals, and initialise the
@@ -1344,7 +1339,7 @@ LgScreenInit(int scrnIndex, ScreenPtr pScreen, int argc, char **argv)
 				displayWidth,pScrn->bitsPerPixel);
 	    break;
 	default:
-		xf86DrvMsg(scrnIndex, X_ERROR,
+		xf86DrvMsg(pScrn->scrnIndex, X_ERROR,
 			   "X11: Internal error: invalid bpp (%d) in LgScreenInit\n",
 			   pScrn->bitsPerPixel);
 		ret = FALSE;
@@ -1443,9 +1438,10 @@ LgScreenInit(int scrnIndex, ScreenPtr pScreen, int argc, char **argv)
 
 /* Usually mandatory */
 Bool
-LgSwitchMode(int scrnIndex, DisplayModePtr mode, int flags)
+LgSwitchMode(SWITCH_MODE_ARGS_DECL)
 {
-	return LgModeInit(xf86Screens[scrnIndex], mode);
+	SCRN_INFO_PTR(arg);
+	return LgModeInit(pScrn, mode);
 }
 
 #define ROUND_DOWN(x, mod)	(((x) / (mod)) * (mod))
@@ -1457,9 +1453,9 @@ LgSwitchMode(int scrnIndex, DisplayModePtr mode, int flags)
  */
 /* Usually mandatory */
 void
-LgAdjustFrame(int scrnIndex, int x, int y, int flags)
+LgAdjustFrame(ADJUST_FRAME_ARGS_DECL)
 {
-	ScrnInfoPtr pScrn = xf86Screens[scrnIndex];
+	SCRN_INFO_PTR(arg);
 	int Base, tmp;
 	CirPtr pCir = CIRPTR(pScrn);
 	vgaHWPtr hwp = VGAHWPTR(pScrn);
@@ -1545,9 +1541,9 @@ LgAdjustFrame(int scrnIndex, int x, int y, int flags)
 
 /* Mandatory */
 Bool
-LgEnterVT(int scrnIndex, int flags)
+LgEnterVT(VT_FUNC_ARGS_DECL)
 {
-	ScrnInfoPtr pScrn = xf86Screens[scrnIndex];
+	SCRN_INFO_PTR(arg);
 	CirPtr pCir = CIRPTR(pScrn);
 #ifdef LG_DEBUG
 	ErrorF("LgEnterVT\n");
@@ -1572,9 +1568,9 @@ LgEnterVT(int scrnIndex, int flags)
 
 /* Mandatory */
 void
-LgLeaveVT(int scrnIndex, int flags)
+LgLeaveVT(VT_FUNC_ARGS_DECL)
 {
-	ScrnInfoPtr pScrn = xf86Screens[scrnIndex];
+	SCRN_INFO_PTR(arg);
 	vgaHWPtr hwp = VGAHWPTR(pScrn);
 	CirPtr pCir = CIRPTR(pScrn);
 #ifdef LG_DEBUG
@@ -1600,9 +1596,9 @@ LgLeaveVT(int scrnIndex, int flags)
 
 /* Mandatory */
 static Bool
-LgCloseScreen(int scrnIndex, ScreenPtr pScreen)
+LgCloseScreen(CLOSE_SCREEN_ARGS_DECL)
 {
-	ScrnInfoPtr pScrn = xf86Screens[scrnIndex];
+	ScrnInfoPtr pScrn = xf86ScreenToScrn(pScreen);
 	vgaHWPtr hwp = VGAHWPTR(pScrn);
 	CirPtr pCir = CIRPTR(pScrn);
 
@@ -1631,7 +1627,7 @@ LgCloseScreen(int scrnIndex, ScreenPtr pScreen)
 	pScrn->vtSema = FALSE;
 
 	pScreen->CloseScreen = pCir->CloseScreen;
-	return (*pScreen->CloseScreen)(scrnIndex, pScreen);
+	return (*pScreen->CloseScreen)(CLOSE_SCREEN_ARGS);
 }
 
 
@@ -1639,8 +1635,9 @@ LgCloseScreen(int scrnIndex, ScreenPtr pScreen)
 
 /* Optional */
 void
-LgFreeScreen(int scrnIndex, int flags)
+LgFreeScreen(FREE_SCREEN_ARGS_DECL)
 {
+	SCRN_INFO_PTR(arg);
 #ifdef LG_DEBUG
 	ErrorF("LgFreeScreen\n");
 #endif
@@ -1649,8 +1646,8 @@ LgFreeScreen(int scrnIndex, int flags)
 	 * get called routinely at the end of a server generation.
 	 */
 	if (xf86LoaderCheckSymbol("vgaHWFreeHWRec"))
-		vgaHWFreeHWRec(xf86Screens[scrnIndex]);
-	LgFreeRec(xf86Screens[scrnIndex]);
+		vgaHWFreeHWRec(pScrn);
+	LgFreeRec(pScrn);
 }
 
 
@@ -1658,7 +1655,7 @@ LgFreeScreen(int scrnIndex, int flags)
 
 /* Optional */
 ModeStatus
-LgValidMode(int scrnIndex, DisplayModePtr mode, Bool verbose, int flags)
+LgValidMode(SCRN_ARG_TYPE arg, DisplayModePtr mode, Bool verbose, int flags)
 {
 	int lace;
 
@@ -1684,14 +1681,14 @@ LgValidMode(int scrnIndex, DisplayModePtr mode, Bool verbose, int flags)
 static Bool
 LgSaveScreen(ScreenPtr pScreen, int mode)
 {
-	CirPtr pCir = CIRPTR(xf86Screens[pScreen->myNum]);
+	CirPtr pCir = CIRPTR(xf86ScreenToScrn(pScreen));
 	ScrnInfoPtr pScrn = NULL;
 	Bool unblank;
 
 	unblank = xf86IsUnblank(mode);
 
 	if (pScreen != NULL)
-	    pScrn = xf86Screens[pScreen->myNum];
+	    pScrn = xf86ScreenToScrn(pScreen);
 
 	if (pScrn != NULL && pScrn->vtSema) {
 	    if (unblank)

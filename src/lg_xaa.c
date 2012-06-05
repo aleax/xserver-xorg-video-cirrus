@@ -98,7 +98,7 @@ static void LgSubsequentScreenToScreenCopy(ScrnInfoPtr pScrn, int x1, int y1,
 Bool
 LgXAAInit(ScreenPtr pScreen)
 {
-    ScrnInfoPtr pScrn = xf86Screens[pScreen->myNum];
+    ScrnInfoPtr pScrn = xf86ScreenToScrn(pScreen);
     CirPtr pCir = CIRPTR(pScrn);
     XAAInfoRecPtr XAAPtr;
 

@@ -69,7 +69,7 @@ DGAFunctionRec CirDGAFuncs = {
 _X_EXPORT Bool
 CirDGAInit(ScreenPtr pScreen)
 {
-  ScrnInfoPtr pScrn = xf86Screens[pScreen->myNum];
+  ScrnInfoPtr pScrn = xf86ScreenToScrn(pScreen);
   CirPtr pCir = CIRPTR(pScrn);
   DGAModePtr modes = NULL, newmodes = NULL, currentMode;
   DisplayModePtr pMode, firstMode;
@@ -191,7 +191,7 @@ Cir_SetViewport(
    CirPtr pCir = CIRPTR(pScrn);
    vgaHWPtr hwp = VGAHWPTR(pScrn);
 
-   pScrn->AdjustFrame(pScrn->pScreen->myNum, x, y, flags);
+   pScrn->AdjustFrame(ADJUST_FRAME_ARGS(pScrn, x, y));
 
    while((hwp->readST01(hwp) & 0x08));
    while(!(hwp->readST01(hwp) & 0x08));
