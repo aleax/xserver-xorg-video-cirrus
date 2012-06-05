@@ -20,7 +20,6 @@
 #include "compiler.h"
 
 #include "xf86Pci.h"
-#include "xf86PciInfo.h"
 
 #include "vgaHW.h"
 

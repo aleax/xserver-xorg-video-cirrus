@@ -24,13 +24,6 @@
 #endif
 /* All drivers need this */
 
-/* Drivers for PCI hardware need this */
-#include "xf86PciInfo.h"
-
-#ifndef PCI_CHIP_GD7556  /*  for old xf86PciInfo.h  */
-#define PCI_CHIP_GD7556            0x004C
-#endif
-
 /* Drivers that need to access the PCI config space directly need this */
 #include "xf86Pci.h"
 
