@@ -26,6 +26,8 @@
 #include "cir.h"
 #define _LG_PRIVATE_
 #include "lg.h"
+
+#ifdef HAVE_XAA_H
 #include "lg_xaa.h"
 
 /* Laguna raster operations, source is OP1 and destination is OP0. */
@@ -296,4 +298,4 @@ LgSubsequentScreenToScreenCopy(ScrnInfoPtr pScrn, int x1, int y1,
 	LgSETDSTXY(x2, y2);
 	LgSETEXTENTS(w, h);
 }
-
+#endif

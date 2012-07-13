@@ -1088,13 +1088,19 @@ AlpPreInit(ScrnInfoPtr pScrn, int flags)
 
 	/* Load XAA if needed */
 	if (!pCir->NoAccel) {
-		if (!xf86LoadSubModule(pScrn, "xaa")) {
+#ifdef HAVE_XAA_H
+		if (!xf86LoadSubModule(pScrn, "xaa"))
+#else
+		if (1)
+#endif
+                {
 			xf86DrvMsg(pScrn->scrnIndex, X_INFO,
 				   "Falling back to shadowfb\n");
 			pCir->NoAccel = TRUE;
 			pCir->shadowFB = TRUE;
 		}
 	}
+
 
 	/* Load ramdac if needed */
 	if (pCir->HWCursor) {
@@ -1650,10 +1656,12 @@ AlpScreenInit(SCREEN_INIT_ARGS_DECL)
 
 	if (!pCir->NoAccel) { /* Initialize XAA functions */
 	    AlpOffscreenAccelInit(pScrn);
+#ifdef HAVE_XAA_H
 	    if (!(pCir->UseMMIO ? AlpXAAInitMMIO(pScreen) :
 		  AlpXAAInit(pScreen)))
 	      xf86DrvMsg(pScrn->scrnIndex, X_ERROR, 
 			 "Could not initialize XAA\n");
+#endif
 	}
 
 #if 1
@@ -1860,9 +1868,11 @@ AlpCloseScreen(CLOSE_SCREEN_ARGS_DECL)
 	    CirUnmapMem(pCir, pScrn->scrnIndex);
 	}
 
+#ifdef HAVE_XAA_H
 	if (pCir->AccelInfoRec)
 		XAADestroyInfoRec(pCir->AccelInfoRec);
 	pCir->AccelInfoRec = NULL;
+#endif
 	if (pCir->CursorInfoRec)
 		xf86DestroyCursorInfoRec(pCir->CursorInfoRec);
 	pCir->CursorInfoRec = NULL;

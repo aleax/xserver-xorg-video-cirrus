@@ -17,6 +17,7 @@
 #define _ALP_PRIVATE_
 #include "alp.h"
 
+#ifdef HAVE_XAA_H
 #ifdef DEBUG
 #define minb(p) \
         (ErrorF("minb(%X)\n", p),\
@@ -266,7 +267,4 @@ AlpXAAInitMMIO(ScreenPtr pScreen)
 	return TRUE;
 }
 
-
-
-
-
+#endif

@@ -16,6 +16,7 @@
 #define _ALP_PRIVATE_
 #include "alp.h"
 
+#ifdef HAVE_XAA_H
 #define WAIT	outb(pCir->PIOReg, 0x31); \
 		while(inb(pCir->PIOReg + 1) & pCir->chip.alp->waitMsk){};
 #define WAIT_1	outb(pCir->PIOReg, 0x31); \
@@ -683,4 +684,4 @@ AlpXAAInit(ScreenPtr pScreen)
 
     return TRUE;
 }
-
+#endif

@@ -797,7 +797,12 @@ LgPreInit(ScrnInfoPtr pScrn, int flags)
 
 	/* Load XAA if needed */
 	if (!pCir->NoAccel) {
-		if (!xf86LoadSubModule(pScrn, "xaa")) {
+#ifdef HAVE_XAA_H
+		if (!xf86LoadSubModule(pScrn, "xaa"))
+#else
+		if (1)
+#endif
+                {
 			xf86DrvMsg(pScrn->scrnIndex, X_INFO,
 				   "Falling back to shadowfb\n");
 			pCir->NoAccel = TRUE;
@@ -1375,10 +1380,12 @@ LgScreenInit(SCREEN_INIT_ARGS_DECL)
 	 */
 	xf86SetBlackWhitePixels(pScreen);
 
+#ifdef HAVE_XAA_H
 	if (!pCir->NoAccel) { /* Initialize XAA functions */
 		if (!LgXAAInit(pScreen))
 			xf86DrvMsg(pScrn->scrnIndex, X_ERROR, "Could not initialize XAA\n");
 	}
+#endif
 #if 1
 	pCir->DGAModeInit = LgModeInit;
 	if (!CirDGAInit(pScreen))
@@ -1609,9 +1616,11 @@ LgCloseScreen(CLOSE_SCREEN_ARGS_DECL)
 	CirUnmapMem(pCir, pScrn->scrnIndex);
 	}
 
+#ifdef HAVE_XAA_H
 	if (pCir->AccelInfoRec)
 		XAADestroyInfoRec(pCir->AccelInfoRec);
 	pCir->AccelInfoRec = NULL;
+#endif
 
 	if (pCir->CursorInfoRec)
 		xf86DestroyCursorInfoRec(pCir->CursorInfoRec);
