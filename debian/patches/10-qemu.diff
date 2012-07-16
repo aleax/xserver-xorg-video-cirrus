@@ -5,10 +5,11 @@ Stolen from Fedora.
 Pointed out by Guido Günther <agx@sigxcpu.org> in #586693.
 --- a/src/alp_driver.c
 +++ b/src/alp_driver.c
-@@ -734,6 +734,20 @@ AlpPreInit(ScrnInfoPtr pScrn, int flags)
+@@ -775,7 +775,21 @@
       else
   	xf86SetDDCproperties(pScrn,xf86PrintEDID(
-  	    xf86DoEDID_DDC2(pScrn->scrnIndex,pCir->I2CPtr1)));
+ 		 xf86DoEDID_DDC2(XF86_SCRN_ARG(pScrn),pCir->I2CPtr1)));
+- 
 +#ifdef XSERVER_LIBPCIACCESS
 +     if (!pScrn->monitor->DDC &&
 +	 ((pCir->PciInfo->subvendor_id & 0xffff) == 0x1af4)) {
@@ -23,6 +24,7 @@ Pointed out by Guido Günther <agx@sigxcpu.org> in #586693.
 +	pScrn->monitor->maxPixClock = 65000;
 +     }
 +#endif
-  
++
       /* Probe the possible LCD display */
       AlpProbeLCD(pScrn);
+ 
