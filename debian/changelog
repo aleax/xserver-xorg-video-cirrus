@@ -1,3 +1,10 @@
+xserver-xorg-video-cirrus (1:1.4.0-2) unstable; urgency=low
+
+  * cirrus: don't bind if there is a PCI kernel driver loaded, for
+    compatibility with the cirrus KMS driver in Linux 3.5.
+
+ -- Julien Cristau <jcristau@debian.org>  Mon, 16 Jul 2012 22:41:46 +0200
+
 xserver-xorg-video-cirrus (1:1.4.0-1) unstable; urgency=low
 
   * New upstream release:
