@@ -1,3 +1,10 @@
+xserver-xorg-video-cirrus (1:1.5.99~somegit) UNRELEASED; urgency=low
+
+  * New upstream release 1.5.0
+  * Require xserver 1.13rc1
+
+ -- Maarten Lankhorst <maarten.lankhorst@canonical.com>  Mon, 16 Jul 2012 15:30:58 +0200
+
 xserver-xorg-video-cirrus (1:1.4.0-1) unstable; urgency=low
 
   * New upstream release:
