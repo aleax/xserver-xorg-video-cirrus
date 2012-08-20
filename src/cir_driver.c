@@ -237,9 +237,10 @@ CIRProbe(DriverPtr drv, int flags)
 				    CIRChipsets, CIRPciChipsets, devSections,
  				    numDevSections, drv, &usedChips);
     /* Free it since we don't need that list after this */
-    free(devSections);
-    if (numUsed <= 0)
+    if (numUsed <= 0) {
+        free(devSections);
  	return FALSE;
+    }
     if (flags & PROBE_DETECT)
  	foundScreen = TRUE;
     else for (i = 0; i < numUsed; i++) {
@@ -257,6 +258,8 @@ CIRProbe(DriverPtr drv, int flags)
                    pPci->device_id, pPci->bus, pPci->domain, pPci->dev, pPci->func);
         xf86DrvMsg(0, X_ERROR,
                    "cirrus: This driver cannot operate until it has been unloaded.\n");
+	xf86UnclaimPciSlot(pPci, devSections[0]);
+        free(devSections);
         return FALSE;
     }
 #endif
@@ -290,6 +293,7 @@ CIRProbe(DriverPtr drv, int flags)
  	    pScrn->Probe	 = NULL;
  	}
     }
+    free(devSections);
     free(usedChips);
      
     return foundScreen;
