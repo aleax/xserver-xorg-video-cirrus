@@ -1,3 +1,10 @@
+xserver-xorg-video-cirrus (1:1.5.1-0ubuntu2) quantal; urgency=low
+
+  * Add fix-fallback.diff from upstream git, if a kernel driver is found
+    don't try to claim the pci device. (LP: #1039648)
+
+ -- Timo Aaltonen <tjaalton@ubuntu.com>  Wed, 22 Aug 2012 10:42:50 +0300
+
 xserver-xorg-video-cirrus (1:1.5.1-0ubuntu1) quantal-proposed; urgency=low
 
   * Sync from unreleased debian git.
