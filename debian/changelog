@@ -1,3 +1,11 @@
+xserver-xorg-video-cirrus (1:1.5.2-1) UNRELEASED; urgency=low
+
+  * New upstream release.
+  * Require xserver 1.13rc1
+  * Refresh 10-qemu.diff
+
+ -- Maarten Lankhorst <maarten.lankhorst@canonical.com>  Mon, 16 Jul 2012 15:30:58 +0200
+
 xserver-xorg-video-cirrus (1:1.5.1-0ubuntu2) quantal; urgency=low
 
   * Add fix-fallback.diff from upstream git, if a kernel driver is found
@@ -10,14 +18,6 @@ xserver-xorg-video-cirrus (1:1.5.1-0ubuntu1) quantal-proposed; urgency=low
   * Sync from unreleased debian git.
 
  -- Timo Aaltonen <tjaalton@ubuntu.com>  Wed, 01 Aug 2012 17:31:56 +0300
-
-xserver-xorg-video-cirrus (1:1.5.1-1) UNRELEASED; urgency=low
-
-  * New upstream release 1.5.1
-  * Require xserver 1.13rc1
-  * Refresh 10-qemu.diff
-
- -- Maarten Lankhorst <maarten.lankhorst@canonical.com>  Mon, 16 Jul 2012 15:30:58 +0200
 
 xserver-xorg-video-cirrus (1:1.4.0-1) unstable; urgency=low
 
