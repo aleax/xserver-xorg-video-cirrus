@@ -1,10 +1,10 @@
-xserver-xorg-video-cirrus (1:1.5.2-1) UNRELEASED; urgency=low
+xserver-xorg-video-cirrus (1:1.5.2-0ubuntu1) raring; urgency=low
 
   * Sync from unreleased debian git.
     - Upstream release fixes cirRefreshArea SEGV (LP: #1043513)
   * Drop fix-fallback.diff, upstreamed.
 
- -- Maarten Lankhorst <maarten.lankhorst@ubuntu.com>  Tue, 08 Jan 2013 11:18:53 +0100
+ -- Maarten Lankhorst <maarten.lankhorst@ubuntu.com>  Tue, 08 Jan 2013 11:21:32 +0100
 
 xserver-xorg-video-cirrus (1:1.5.2-1) UNRELEASED; urgency=low
 
