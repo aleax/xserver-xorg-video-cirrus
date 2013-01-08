@@ -1,6 +1,6 @@
-xserver-xorg-video-cirrus (1:1.5.1-1) UNRELEASED; urgency=low
+xserver-xorg-video-cirrus (1:1.5.2-1) UNRELEASED; urgency=low
 
-  * New upstream release 1.5.1
+  * New upstream release.
   * Require xserver 1.13rc1
   * Refresh 10-qemu.diff
 
